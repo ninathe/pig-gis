@@ -1,0 +1,12 @@
+#navbar{
+    width: 300px;
+    height: 100vh;
+    background: rgb(21, 42, 70);
+    box-shadow: 2px 0 4px 0 rgba(0,0,0,0.50);
+    font-family: Helvetica, sans-serif;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    position: absolute;
+  
+}
