@@ -1,63 +1,145 @@
-/* global window */
 import React, {Component} from 'react';
-import {render} from 'react-dom';
-import MapGL from 'react-map-gl';
-// import Navbar from './Navbar'
+import styled from "styled-components";
+import "mapbox-gl/dist/mapbox-gl.css";
+import mapboxgl from "mapbox-gl/dist/mapbox-gl";
+mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
-const MAPBOX_TOKEN = 'pk.eyJ1IjoibmluYXRoOTMiLCJhIjoiY2piOWVmNmE5MGJmMTJwbW8zOHJuZTBmZiJ9.69E-4-Z2x8SiDViBka_tKA'; // Set your mapbox token here
 
-export default class Map extends Component {
+const MapDiv = styled.div`
+  width: '100%';
+  height: '100vh';
+`;
 
-  state = {
-    mapStyle: 'mapbox://styles/mapbox/light-v9',
-    viewport: {
-      latitude: 59.911491,
-      longitude: 10.757933,
-      zoom: 10,
-      bearing: 0,
-      pitch: 0,
-      width: 500,
-      height: 500
-    }
+class Map extends React.Component {
+  constructor(props){
+    super(props);
+    console.log("UPDATEIN")
+    console.log(this.props);
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this._resize);
-    this._resize();
+    this.map = new mapboxgl.Map({
+      container: this.mapContainer,
+      style: 'mapbox://styles/mapbox/light-v9'
+    });
+  }
+
+  componentDidUpdate() {
+    //update layers
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this._resize);
+    // this.map.remove();
   }
 
-  _resize = () => {
-    this.setState({
-      viewport: {
-        ...this.state.viewport,
-        width: this.props.width || window.innerWidth,
-        height: this.props.height || window.innerHeight
+  removeMapLayers(layerIds) {
+    for (let i in layerIds) {
+      let layerId = layerIds[i];
+      if(this._map.getSource(layerId)){
+        this._map.removeLayer(layerId);
+        this._map.removeSource(layerId);
       }
-    });
-  };
+    }
+  }
 
-  _onViewportChange = viewport => this.setState({viewport});
 
-  _onStyleChange = mapStyle => this.setState({mapStyle});
+  addPointLayer(layer, i) {
+    const {layers} = this.props;
+    var layerAbove = i === 0 ? null : layers[i-1].id; //Assures that layer gets rendered in correct order
+    let map = this._map;
+    var visibility = layer.visible ? 'visible': 'none';
+
+    map.addLayer({
+      'id': layer.id,
+      'type': 'circle',
+      'source': {
+        'type': 'geojson',
+        'data': layer.data
+      },
+      'layout': {'visibility': visibility },
+      'paint': {
+        'circle-radius': layer.data.radius,
+        'circle-color': layer.data.color,
+        'circle-opacity': layer.data.opacity
+      }
+    }, layerAbove);
+  }
+
+  addLineLayer(layer, i) {
+    const {layers} = this.props;
+    var layerAbove = i === 0 ? null : layers[i-1].id; //Assures that layer gets rendered in correct order
+
+    let map = this._map;
+    var visibility = layer.visible ? 'visible': 'none';
+
+    map.addLayer({
+      'id': layer.id,
+      'type': 'line',
+      'source': {
+        'type': 'geojson',
+        'data': layer.data
+      },
+      'layout': {'visibility': visibility },
+      'paint': {
+        'line-color': layer.data.color,
+        'line-opacity': layer.data.opacity,
+        'line-width': 6
+      }
+    }, layerAbove);
+
+  }
+
+  addPolygonLayer(layer, i) {
+    const {layers} = this.props;
+    var layerAbove = i === 0 ? null : layers[i-1].id; //Assures that layer gets rendered in correct order
+    let map = this._map;
+    var visibility = layer.visible ? 'visible': 'none';
+
+    map.addLayer({
+      'id': layer.id,
+      'type': 'fill',
+      'source': {
+        'type': 'geojson',
+        'data': layer.data
+      },
+      'layout': {'visibility': visibility },
+      'paint': {
+        'fill-color': layer.data.color,
+        'fill-opacity': layer.data.opacity
+      }
+    },layerAbove);
+
+    let strokeOpacity = layer.data.strokeOpacity ? layer.data.strokeOpacity : 1;
+    strokeOpacity = strokeOpacity > 1? strokeOpacity : 1;
+    let strokeColor = layer.data.strokeColor ? layer.data.strokeColor: layer.data.color;
+
+    map.addLayer({
+      'id': layer.id + '_outline',
+      'type': 'line',
+      'source': {
+        'type': 'geojson',
+        'data': layer.data
+      },
+      'layout': {'visibility': visibility },
+      'paint': {
+        'line-color': strokeColor,
+        'line-opacity': strokeOpacity ,
+        'line-width': 3
+      }
+    }, layerAbove);
+
+  }
+
 
   render() {
-
-    const {viewport, mapStyle} = this.state;
-
-    return (
-      <MapGL
-        {...viewport}
-        mapStyle={mapStyle}
-        onViewportChange={this._onViewportChange}
-        mapboxApiAccessToken={MAPBOX_TOKEN} >
-
-        {/* <Navbar /> */}
-      </MapGL>
-    );
+    const style ={
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      width: '100%'
+    };
+    return <div style ={style} ref={el => this.mapContainer = el } />;
   }
-
 }
+
+export default Map;
