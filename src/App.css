@@ -42,3 +42,36 @@
   font-weight: normal;
   font-size: 14px;
 }
+
+
+/* FileDrop */
+.HalloKlasse{
+  border: 1px dashed grey !important;
+  min-height: 100px!important;
+}
+.HalloKlasse svg{
+  width: 25px;
+  height: 25px;
+}
+.HalloKlasse button{
+  min-width: 10px;
+  min-height: 10px;
+  width: 15px;
+  height: 15px;
+  top: 5px;
+  right: 40px;
+}
+.HalloKlasse span svg{
+  width: 15px;
+  height: 15px;
+}
+
+.TekstDrop {
+  font-size: 12px !important;
+  font-family: Roboto;
+}
+
+
+.MuiSnackbar-root-123.MuiSnackbar-anchorOriginBottomLeft-129{
+  left:0;
+}

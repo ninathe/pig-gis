@@ -15,8 +15,13 @@ class Filedrop extends Component{
     this.setState({
       files: files
     });
+    this.props.updateMapLayers(files);
+  
     alert("files received");
-    console.log(files)
+
+    // const sweeterArray = sweetArray.map(sweetItem => {
+    //   return sweetItem * 2
+    // })
   }
 
 

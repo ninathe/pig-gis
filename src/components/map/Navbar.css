@@ -1,12 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+
+h1{
+    font-weight: 400;
+}
+h2{
+    font-weight: 400;
+    font-size: 18px;
+}
+
+
+
 #navbar{
+    
     width: 300px;
     height: 100vh;
     background: rgb(21, 42, 70);
     box-shadow: 2px 0 4px 0 rgba(0,0,0,0.50);
-    font-family: Helvetica, sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: white;
     font-weight: bold;
     font-size: 20px;
     position: absolute;
-  
+    z-index: 100;
+    font-weight:100;
 }

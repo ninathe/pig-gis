@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 import MapGL from 'react-map-gl';
-import Navbar from './Navbar'
+// import Navbar from './Navbar'
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoibmluYXRoOTMiLCJhIjoiY2piOWVmNmE5MGJmMTJwbW8zOHJuZTBmZiJ9.69E-4-Z2x8SiDViBka_tKA'; // Set your mapbox token here
 

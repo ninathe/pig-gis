@@ -82,7 +82,7 @@ const styles = theme => ({
 class PersistentDrawerLeft extends React.Component {
   state = {
     open: false,
-    receivedJson: this.props.receivedJson
+    // receivedJson: this.props.receivedJson
   };
 
   handleDrawerOpen = () => {
@@ -96,6 +96,7 @@ class PersistentDrawerLeft extends React.Component {
   render() {
     const { classes, theme } = this.props;
     const { open } = this.state;
+
 
     return (
       <div className={classes.root}>
@@ -135,7 +136,7 @@ class PersistentDrawerLeft extends React.Component {
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
-          <FileDrop receivedJson={this.state.receivedJson}></FileDrop>
+          <FileDrop updateMapLayers={this.props.updateMapLayers}></FileDrop>
           <Divider />
           <List>
             {['Hei', 'Test', 'Send email', 'Drafts'].map((text, index) => (

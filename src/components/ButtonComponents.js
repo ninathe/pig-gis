@@ -27,4 +27,4 @@ const LinedButton = styled(Button)`
   color: #50808E;
 `;
 
-export default {Button, LinedButton};
+export {Button, LinedButton};
