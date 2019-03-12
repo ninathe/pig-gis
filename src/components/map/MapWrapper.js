@@ -4,6 +4,8 @@ import Map from './Map';
 // import Navbar from '../ResponsiveDrawer';
 import Navbar from '../RDrawer';
 import Geocoder from "../Geocoder";
+// import Gislyfe from './reducers/Gislyfe';
+// import { Provider } from 'react-redux';
 
 class MapWrapper extends Component{
   constructor(props){
@@ -13,18 +15,21 @@ class MapWrapper extends Component{
       layers: [],
     };
   }
-  
+  //initialize store
+// let store = createStore(Gislyfe)
+// console.log(store.getState());
   updateMapLayers(layers){
     this.setState({ layers: layers });
   }
 
   render() {
-    // console.log(this.state.layers);
     return (
-      <div>
-        <Navbar updateMapLayers={this.updateMapLayers.bind(this)}/>
-        <Map layers={this.state.layers}/>
-    </div>
+      // <Provide store = { store }r>
+        <div>
+          <Navbar updateMapLayers={this.updateMapLayers.bind(this)}/>
+          <Map layers={this.state.layers}/>
+        </div>  
+      // </Provide>    
     );
   }
 }

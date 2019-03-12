@@ -2,16 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-// import Map from './components/frontpage/Index';
 import Map from './components/map/MapWrapper';
-import { createStore } from 'redux';
+import { Provider } from 'react-redux'
+import configureStore from './store';
 
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(
-    
-    <Map />, 
 
+
+ReactDOM.render(
+    <Provider store={configureStore()}>
+        <Map />
+        <div>HALLO</div>
+    </Provider>,
     document.getElementById('root')
 );
 registerServiceWorker();
