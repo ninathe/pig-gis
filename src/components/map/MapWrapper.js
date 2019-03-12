@@ -1,11 +1,19 @@
 import styled from "styled-components";
 import React, {Component} from 'react';
-import Map from './Map';
+import Map from './Map2';
 // import Navbar from '../ResponsiveDrawer';
 import Navbar from '../RDrawer';
 import Geocoder from "../Geocoder";
 // import Gislyfe from './reducers/Gislyfe';
 // import { Provider } from 'react-redux';
+
+
+const MapWrapperDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  align-items: stretch;
+`;
 
 class MapWrapper extends Component{
   constructor(props){
@@ -25,10 +33,12 @@ class MapWrapper extends Component{
   render() {
     return (
       // <Provide store = { store }r>
-        <div>
-          <Navbar updateMapLayers={this.updateMapLayers.bind(this)}/>
+      <div>
+        <Navbar updateMapLayers={this.updateMapLayers.bind(this)}/>
+        <MapWrapperDiv>
           <Map layers={this.state.layers}/>
-        </div>  
+        </MapWrapperDiv> 
+        </div> 
       // </Provide>    
     );
   }

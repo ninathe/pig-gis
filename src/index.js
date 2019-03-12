@@ -13,7 +13,6 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(
     <Provider store={configureStore()}>
         <Map />
-        <div>HALLO</div>
     </Provider>,
     document.getElementById('root')
 );
