@@ -10,6 +10,39 @@ class Filedrop extends Component{
       
     };
   }
+  
+
+
+  setupReader(files) {
+    var json;
+    var jsonFiles = [];
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      var reader = new FileReader();
+  
+      // Closure to capture the file information.
+      reader.onload = (function (theFile) {
+        return function (e) {
+          try {
+            json = JSON.parse(e.target.result);
+            jsonFiles.push(json);
+          } catch (ex) {
+            alert('ex when trying to parse json = ' + ex);
+          }
+        }
+      })(f);
+      reader.readAsText(f);
+    }
+
+    console.log(jsonFiles);
+  
+  }
+
+
+
+
+
   handleChange(files){
     // this.state.receivedJson;
     this.setState({
@@ -18,10 +51,8 @@ class Filedrop extends Component{
     this.props.updateMapLayers(files);
   
     alert("files received");
-
-    // const sweeterArray = sweetArray.map(sweetItem => {
-    //   return sweetItem * 2
-    // })
+    console.log(files);
+    this.setupReader(files);
   }
 
 

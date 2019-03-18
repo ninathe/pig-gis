@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, {Component} from 'react';
-import Map from './Map2';
+import Map from './Map';
 // import Navbar from '../ResponsiveDrawer';
 import Navbar from '../RDrawer';
 import Geocoder from "../Geocoder";
