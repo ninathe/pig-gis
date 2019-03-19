@@ -17,7 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import FileDrop from './FileDrop';
+import FileDrop from './FileDrop2';
 
 
 const drawerWidth = 340;
@@ -136,7 +136,7 @@ class PersistentDrawerLeft extends React.Component {
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
-          <FileDrop updateMapLayers={this.props.updateMapLayers}></FileDrop>
+          <FileDrop ></FileDrop>
           <Divider />
           <List>
             {['Hei', 'Test', 'Send email', 'Drafts'].map((text, index) => (

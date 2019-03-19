@@ -10,6 +10,7 @@
     "material-ui": "^0.20.2",
     "material-ui-dropzone": "^2.3.2",
     "material-ui-icons": "^1.0.0-beta.36",
+    "prop-types": "^15.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.3",
@@ -33,5 +34,4 @@
   "devDependencies": {
     "json-loader": "^0.5.7"
   }
-  
 }

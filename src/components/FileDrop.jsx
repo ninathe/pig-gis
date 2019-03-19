@@ -1,18 +1,27 @@
 import React, {Component} from 'react';
 import {DropzoneArea} from 'material-ui-dropzone';
- 
+import { connect } from 'react-redux'
+import { addLayer, removeLayer } from '../actions'
+
+
+const mapStateToProps = (state, ownProps) => ({
+  active: ownProps.filter === state.visibilityFilter
+})
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onChange: () => dispatch(addLayer(ownProps.layer))
+})
+
 class Filedrop extends Component{
   constructor(props){
+    console.log(props);
     super(props);
     this.state = {
+      // layers: null,
       // receivedJson: this.props.receivedJson,
       files: [],
-      
     };
   }
   
-
-
   setupReader(files) {
     var json;
     var jsonFiles = [];
@@ -27,6 +36,8 @@ class Filedrop extends Component{
           try {
             json = JSON.parse(e.target.result);
             jsonFiles.push(json);
+
+            dispatch(addLayer(json))
           } catch (ex) {
             alert('ex when trying to parse json = ' + ex);
           }
@@ -36,11 +47,8 @@ class Filedrop extends Component{
     }
 
     console.log(jsonFiles);
-  
+
   }
-
-
-
 
 
   handleChange(files){
@@ -49,9 +57,7 @@ class Filedrop extends Component{
       files: files
     });
     this.props.updateMapLayers(files);
-  
-    alert("files received");
-    console.log(files);
+
     this.setupReader(files);
   }
 
@@ -61,10 +67,10 @@ class Filedrop extends Component{
     return (
       <DropzoneArea 
         dropzoneText={"Drop Json-files here"} 
-        filesLimit={4}
+        filesLimit={1}
         dropZoneClass={"HalloKlasse"}
         dropzoneParagraphClass={"TekstDrop"}
-        acceptedFiles= {['application/json/*']} //TODO: Add support for geoJson aswell
+        acceptedFiles= {['application/json/*']} 
         onChange={this.handleChange.bind(this)}
         showFileNames= {true}
         />
@@ -72,4 +78,4 @@ class Filedrop extends Component{
   }
 } 
  
-export default Filedrop;
+export default connect()(Filedrop);
