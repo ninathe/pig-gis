@@ -17,6 +17,11 @@ export const removeLayer = layer => ({
   layer
 })
 
+export const updateLayers = layer => ({
+  type: 'UPDATE_LAYERS',
+  layer
+})
+
 
 
 export const setVisibilityFilter = filter => ({

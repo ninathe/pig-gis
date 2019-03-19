@@ -12,15 +12,23 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import FileDrop from './FileDrop2';
+import Layer from './Layer';
+import CreateLayerList from '../containers/CreateLayerList'
+import LayerList from './LayerList'
+import { connect } from 'react-redux'
+
+
 
 
 const drawerWidth = 340;
+
+const layers = [{id: 0, name: "Vei", visible: true, color: 'red', border: 'black'}, {id: 1, name: "Skole", visible: false, color: 'pink', border: 'black'}]
+
+function mapStateToProps(state) {
+  console.log("MAPPING")
+  console.log(state) // state
+}
 
 const styles = theme => ({
   root: {
@@ -138,24 +146,11 @@ class PersistentDrawerLeft extends React.Component {
           </div>
           <FileDrop ></FileDrop>
           <Divider />
-          <List>
-            {['Hei', 'Test', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+          <LayerList layers ={layers}></LayerList>
+          {/* <Layer layerName = "Vei"></Layer> */}
+          {/* <Layer layerName = "Skolekrets"></Layer> */}
           
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+        
         </Drawer>
       </div>
     );

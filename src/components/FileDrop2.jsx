@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {DropzoneArea} from 'material-ui-dropzone';
 import { connect } from 'react-redux'
 import { addLayer, removeLayer } from '../actions'
-import { readFile } from 'fs';
 import '../App.css'
 
 
@@ -22,7 +21,6 @@ const Filedrop = ({dispatch}) => {
     reader.onload = function(e){
       try{
         let json = JSON.parse(e.target.result)
-        // dispatch(addLayer(json))
         callback(json);
       } catch(ex){
         alert('ex when trying to parse json = ' + ex);
@@ -50,6 +48,7 @@ const Filedrop = ({dispatch}) => {
         acceptedFiles= {['application/json/*']} 
         onDrop={setupReader}
         onDelete={deleteLayer}
+        showPreviewsInDropzone={false}
         />
   )
 }

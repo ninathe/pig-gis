@@ -9,15 +9,18 @@ const layers = (state = initialState, action) => {
         ...state,
         layers: state.layers.concat(action.layer)
       }
-      // return { 
-      //   ...state,
-      //   layers: [...state.layers, action.layer]
-      // }
 
       case 'REMOVE_LAYER':
         return { 
           ...state,
           layers: state.layers.filter(function(layer){return layer != action.layer })
+        }
+
+      case 'UPDATE_LAYERS':
+        return { 
+          // debugger
+          // ...state,
+          // layers: state.layers.filter(function(layer){return layer != action.layer })
         }
 
       case 'TOGGLE_TODO':
