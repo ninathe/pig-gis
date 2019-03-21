@@ -22,11 +22,27 @@ export const updateLayers = layer => ({
   layer
 })
 
+export const updateLayerFill = (layerID, fillColor) => ({
+  type: 'UPDATE_LAYER_FILL',
+  layerID,
+  fillColor
+})
+export const updateLayerBorder = (layerID, borderColor) => ({
+  type: 'UPDATE_LAYER_BORDER',
+  layerID,
+  borderColor
+})
 
+export const updateLayerVisibility = (layerID, visibility) => ({
+  type: 'UPDATE_LAYER_VISIBILITY',
+  layerID,
+  visibility
+})
 
-export const setVisibilityFilter = filter => ({
-  type: 'SET_VISIBILITY_FILTER',
-  filter
+export const updateLayerName = (layerID, name) => ({
+  type: 'UPDATE_LAYER_NAME',
+  layerID,
+  name
 })
 
 export const toggleTodo = id => ({
@@ -34,8 +50,3 @@ export const toggleTodo = id => ({
   id
 })
 
-export const VisibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
-}

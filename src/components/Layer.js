@@ -14,6 +14,13 @@ import BorderColor from '@material-ui/icons/BorderColor';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Divider from '@material-ui/core/Divider';
+import ColorPicker from 'material-ui-color-picker'
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import DoneIcon from '@material-ui/icons/Done';
+
+
+
 
 const styles = theme => ({
   root: {
@@ -29,15 +36,36 @@ const styles = theme => ({
 class NestedList extends React.Component {
   state = {
     open: false,
-    visible: this.props.visible
-  };
+    visible: this.props.visible,
+    layerName: this.props.name
+  }
 
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
-  };
+  }
+
+  changeFillColor = (color) =>{
+    if(color!=undefined)
+      this.props.updateLayerFill(this.props.id, color)
+  }
+  changeBorderColor = (color) =>{
+    if(color!=undefined)
+      this.props.updateLayerBorder(this.props.id, color)
+  }
+
+  updateInput=(e)=>{
+    this.setState({layerName: e.target.value})
+  }
+
+  changeName= () =>{
+    this.props.updateLayerName(this.props.id, this.state.layerName)
+  }
+
   toggleVisibility = (e) =>{
     e.stopPropagation();
     this.setState(state => ({ visible: !state.visible }));
+    this.props.updateLayerVisibility(this.props.id, (this.props.visible == "visible"? "none":"visible"))
+    
   }
 
   render() {
@@ -50,30 +78,49 @@ class NestedList extends React.Component {
       >
         <ListItem button onClick={this.handleClick}>
           <ListItemIcon>
-          {this.state.visible ? <Visibility button onClick={this.toggleVisibility} /> : <VisibilityOff button onClick={this.toggleVisibility} />}
+          {this.props.visible == "visible" ? <Visibility button onClick={this.toggleVisibility.bind(this)} /> : <VisibilityOff button onClick={this.toggleVisibility} />}
           </ListItemIcon>
           <ListItemText inset primary={this.props.name} />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
+            <ListItem  className={classes.nested} >
               <ListItemIcon>
                 <Title />
               </ListItemIcon>
-              <ListItemText inset primary="Edit name" />
+              <TextField
+                onChange={this.updateInput.bind(this)}
+                id="standard-dense"
+                label="Edit name"
+                margin="dense"
+              />
+              <IconButton className={classes.iconButton} aria-label="Change" onClick={this.changeName.bind(this)}>
+                <DoneIcon />
+              </IconButton>
+
             </ListItem>
             <ListItem button className={classes.nested}>
               <ListItemIcon>
                 <FormatColorFill />
               </ListItemIcon>
               <ListItemText inset primary="Fill color" />
+              <ColorPicker
+                name='color'
+                defaultValue={this.props.fillColor}
+                onChange={this.changeFillColor.bind(this)}
+              />
             </ListItem>
             <ListItem button className={classes.nested}>
               <ListItemIcon>
                 <BorderColor />
               </ListItemIcon>
               <ListItemText inset primary="Border color" />
+              <ColorPicker
+                name='color'
+                defaultValue={this.props.borderColor}
+                onChange={this.changeBorderColor.bind(this)}
+              />
             </ListItem>
             <Divider/>
           </List>

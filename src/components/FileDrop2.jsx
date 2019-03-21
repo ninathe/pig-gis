@@ -21,7 +21,7 @@ const Filedrop = ({dispatch}) => {
     reader.onload = function(e){
       try{
         let json = JSON.parse(e.target.result)
-        callback(json);
+        callback(formatJson(json));
       } catch(ex){
         alert('ex when trying to parse json = ' + ex);
       }
@@ -30,6 +30,20 @@ const Filedrop = ({dispatch}) => {
     reader.readAsText(file);
   }
 
+  function formatJson(json){
+    if(!json.name)
+      json.name = "Layer"
+    if(!json.visible)
+      json.visible = "visible"
+    if(!json.id)
+      json.id = "layer-"+layers;
+    if(!json.fillColor)
+      json.fillColor = "red"
+    if(!json.borderColor)
+      json.borderColor = "black"
+    layers++;
+    return json
+  }
 
   function deleteLayer(file){
     readFile(file, function (json) {

@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import React, {Component} from 'react';
-import Map from './Map';
+import MapContainer from './map/Map'
 // import Navbar from '../ResponsiveDrawer';
-import Navbar from '../RDrawer';
-import Geocoder from "../Geocoder";
+import Navbar from './RDrawer';
+import Geocoder from "./Geocoder";
 // import Gislyfe from './reducers/Gislyfe';
 // import { Provider } from 'react-redux';
 
@@ -36,7 +36,7 @@ class MapWrapper extends Component{
       <div>
         <Navbar updateMapLayers={this.updateMapLayers.bind(this)}/>
         <MapWrapperDiv>
-          <Map layers={this.state.layers}/>
+          <MapContainer />
         </MapWrapperDiv> 
         </div> 
       // </Provide>    

@@ -1,20 +1,66 @@
-let initialState = {
-  layers: [],
-}
+let initialState = []
 
 const layers = (state = initialState, action) => {
     switch (action.type) {
       case 'ADD_LAYER':
-      return { 
-        ...state,
-        layers: state.layers.concat(action.layer)
-      }
+        return [
+          ...state.slice(0, state.length),
+          action.layer,
+          ...state.slice(state.length)
+        ]
+
 
       case 'REMOVE_LAYER':
         return { 
           ...state,
-          layers: state.layers.filter(function(layer){return layer != action.layer })
+          layers: state.filter(function(layer){return layer != action.layer })
         }
+      
+      case 'UPDATE_LAYER_FILL':
+        return state.map((layer) => {
+          // Find the item with the matching id
+          if(layer.id === action.layerID) {
+            return {
+              ...layer,  
+              fillColor: action.fillColor 
+            }
+          }
+          return layer;
+        });
+      
+        case 'UPDATE_LAYER_BORDER':
+        return state.map((layer) => {
+          // Find the item with the matching id
+          if(layer.id === action.layerID) {
+            return {
+              ...layer,  
+              borderColor: action.borderColor 
+            }
+          }
+          return layer;
+        });
+
+      case 'UPDATE_LAYER_VISIBILITY':
+        return state.map((layer) => {
+          if(layer.id === action.layerID) {
+            return {
+              ...layer,  
+              visible: action.visibility 
+            }
+          }
+          return layer;
+        });
+      
+      case 'UPDATE_LAYER_NAME':
+        return state.map((layer) => {
+          if(layer.id === action.layerID) {
+            return {
+              ...layer,  
+              name: action.name 
+            }
+          }
+          return layer;
+        });
 
       case 'UPDATE_LAYERS':
         return { 
@@ -33,3 +79,4 @@ const layers = (state = initialState, action) => {
   }
   
   export default layers
+

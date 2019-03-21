@@ -146,7 +146,8 @@ class PersistentDrawerLeft extends React.Component {
           </div>
           <FileDrop ></FileDrop>
           <Divider />
-          <LayerList layers ={layers}></LayerList>
+          {/* <LayerList layers ={layers}></LayerList> */}
+          <CreateLayerList></CreateLayerList>
           {/* <Layer layerName = "Vei"></Layer> */}
           {/* <Layer layerName = "Skolekrets"></Layer> */}
           

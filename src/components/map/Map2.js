@@ -2,27 +2,22 @@ import React, { Component } from 'react'
 import './map.css'
 import mapboxgl from 'mapbox-gl'
 import roads from './veg.json';
-import PropTypes from 'prop-types'
-import { connect } from "react-redux";
-import { updateLayers } from "../../actions";
-
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
-
+const Map = ({ layers, addLayers }) => (
 class Map extends Component{
   constructor(props) {
     super(props);
-    console.log(props)
+    // console.log("UPDATING MAP")
     this.state = {
-      // lng: -80.00,
-      // lat: 40.438,
-      lng: 10.257952289845194, 
-      lat: 63.41008738358773,
+      lng: -80.00,
+      lat: 40.438,
+      // lng: 10.257952289845194, 
+      // lat: 63.41008738358773,
       zoom: 11
     };
   }
-
 
   componentDidMount() {
     const { lng, lat, zoom } = this.state;
@@ -33,12 +28,10 @@ class Map extends Component{
       center: [lng, lat],
       zoom
     });
-    
-    this._map = map;
 
     map.on('load', function () {
-      this.addHeatmap();
-      // this.addLineLayer(roads);
+      this.addHeatmap(map);
+      this.addLineLayer(roads, map);
     }.bind(this));
 
      map.on('move', () => {
@@ -52,34 +45,8 @@ class Map extends Component{
     });
 
   }
-  componentDidUpdate() {
-    this.updateMapLayers()
-  }
 
-  updateMapLayers(props){
-    this.deleteLayers();
-    this.addLayers();    
-  }
-
-  deleteLayers(){
-    for (let i = 0; i < this.props.layers.length; i++) {
-      if(this._map.getSource(this.props.layers[i].id)){
-        this._map.removeLayer(this.props.layers[i].id)
-        this._map.removeLayer(this.props.layers[i].id + '_outline')
-        this._map.removeSource(this.props.layers[i].id)
-        this._map.removeSource(this.props.layers[i].id + '_outline')
-      }
-    }
-  }
-
-  addLayers(){
-    for (let i = 0; i < this.props.layers.length; i++) {
-      this.addPolygonLayer(this.props.layers[i])
-    }
-  }
-
-  addLineLayer(layer) {
-    let map = this._map
+  addLineLayer(layer, map) {
     map.addLayer({
       'id': layer.name,
       'type': 'line',
@@ -97,45 +64,7 @@ class Map extends Component{
 
   }
 
-
-  addPolygonLayer(layer) {
-    let map = this._map
-    console.log("ADDING POLYGONLAYER")
-
-    map.addLayer({
-      'id': layer.id,
-      'type': 'fill',
-      'source': {
-        'type': 'geojson',
-        'data': layer
-      },
-      'layout': {'visibility': layer.visible },
-      'paint': {
-        'fill-color': layer.fillColor,
-        'fill-opacity': 1
-      }
-    });
-
-    map.addLayer({
-      'id': layer.id + '_outline',
-      'type': 'line',
-      'source': {
-        'type': 'geojson',
-        'data': layer
-      },
-      'layout': {'visibility': layer.visible },
-      'paint': {
-        'line-color': layer.borderColor,
-        'line-opacity': 1 ,
-        'line-width': 1
-      }
-    });
-  }
-
-
-  addHeatmap(){
-    let map = this._map
-
+  addHeatmap(map){
     map.addSource('trees', {
       type: 'vector',
       url: 'mapbox://ninath93.5kp4zadi'
@@ -251,27 +180,4 @@ class Map extends Component{
   }
 }
 
-
-Map.propTypes = {
-  layers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    visible: PropTypes.bool.isRequired,
-    color: PropTypes.string.isRequired,
-    border: PropTypes.string.isRequired
-  }).isRequired).isRequired,
-}
-
-
-const mapStateToProps = (state) => ({
-  layers: state.layers
-});
-
-const mapDispatchToProps = {
-  updateLayers
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Map);
+export default Map

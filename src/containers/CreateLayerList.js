@@ -1,14 +1,19 @@
 import { connect } from "react-redux";
-import { updateLayers } from "../actions";
+import { updateLayers, updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName } from "../actions";
 import LayerList from "../components/LayerList";
 
-const mapStateToProps = (state, ownProps) => ({
-  layers: ownProps.layers === state.layers
+
+const mapStateToProps = (state) => ({
+  layers: state.layers
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: () => dispatch(updateLayers(ownProps.layers))
-});
+
+const mapDispatchToProps ={
+  updateLayerVisibility,
+  updateLayerFill,
+  updateLayerBorder, 
+  updateLayerName
+};
 
 export default connect(
   mapStateToProps,
