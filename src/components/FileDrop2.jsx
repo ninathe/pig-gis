@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {DropzoneArea} from 'material-ui-dropzone';
 import { connect } from 'react-redux'
-import { addLayer, removeLayer } from '../actions'
+import { addLayer, deleteLayer } from '../actions'
 import '../App.css'
 
 
 
 const Filedrop = ({dispatch}) => {
   let layers = 0;
+  let colors = ['#ff1744', '#2979ff', '#00b8d4', '#00bfa5',  '#ff6d00', '#00bfa5', '#ffd600', '#d50000' ]
 
   function setupReader(file) {
     readFile(file, function (json) {
@@ -38,7 +39,7 @@ const Filedrop = ({dispatch}) => {
     if(!json.id)
       json.id = "layer-"+layers;
     if(!json.fillColor)
-      json.fillColor = "red"
+      json.fillColor = colors[layers%colors.length]
     if(!json.borderColor)
       json.borderColor = "black"
     layers++;
@@ -47,16 +48,14 @@ const Filedrop = ({dispatch}) => {
 
   function deleteLayer(file){
     readFile(file, function (json) {
-      dispatch(removeLayer(json))
+      dispatch(deleteLayer(json))
     });
   }
-
-
 
   return (
     <DropzoneArea 
         dropzoneText={"Drop Json-files here"} 
-        filesLimit={4}
+        filesLimit={8}
         dropZoneClass={"HalloKlasse"}
         dropzoneParagraphClass={"TekstDrop"}
         acceptedFiles= {['application/json/*']} 

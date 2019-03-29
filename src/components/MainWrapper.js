@@ -1,11 +1,8 @@
 import styled from "styled-components";
 import React, {Component} from 'react';
 import MapContainer from './map/Map'
-// import Navbar from '../ResponsiveDrawer';
 import Navbar from './RDrawer';
 import Geocoder from "./Geocoder";
-// import Gislyfe from './reducers/Gislyfe';
-// import { Provider } from 'react-redux';
 
 
 const MapWrapperDiv = styled.div`
@@ -23,9 +20,7 @@ class MapWrapper extends Component{
       layers: [],
     };
   }
-  //initialize store
-// let store = createStore(Gislyfe)
-// console.log(store.getState());
+
   updateMapLayers(layers){
     this.setState({ layers: layers });
   }

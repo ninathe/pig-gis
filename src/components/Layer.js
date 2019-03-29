@@ -18,6 +18,7 @@ import ColorPicker from 'material-ui-color-picker'
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import DoneIcon from '@material-ui/icons/Done';
+import Button from '@material-ui/core/Button';
 
 
 
@@ -57,8 +58,13 @@ class NestedList extends React.Component {
     this.setState({layerName: e.target.value})
   }
 
-  changeName= () =>{
+  changeName = () =>{
     this.props.updateLayerName(this.props.id, this.state.layerName)
+  }
+
+  deleteLayer = () =>{
+    if(window.confirm("Are you sure you want to delete the layer: "+ this.props.name))
+      this.props.deleteLayer(this.props.id)
   }
 
   toggleVisibility = (e) =>{
@@ -122,7 +128,15 @@ class NestedList extends React.Component {
                 onChange={this.changeBorderColor.bind(this)}
               />
             </ListItem>
+            <ListItem  className={classes.nested}>
+            <Button 
+              color="secondary" 
+              className={classes.button}
+              onClick={this.deleteLayer.bind(this)}>
+              Delete layer
+            </Button>
             <Divider/>
+            </ListItem>
           </List>
         </Collapse>
       </List>

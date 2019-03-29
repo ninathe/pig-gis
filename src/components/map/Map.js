@@ -5,6 +5,7 @@ import roads from './veg.json';
 import PropTypes from 'prop-types'
 import { connect } from "react-redux";
 import { updateLayers } from "../../actions";
+import { Layer } from 'react-mapbox-gl';
 
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -15,6 +16,7 @@ class Map extends Component{
     super(props);
     console.log(props)
     this.state = {
+      layersInMap: [],
       // lng: -80.00,
       // lat: 40.438,
       lng: 10.257952289845194, 
@@ -62,21 +64,63 @@ class Map extends Component{
   }
 
   deleteLayers(){
-    for (let i = 0; i < this.props.layers.length; i++) {
-      if(this._map.getSource(this.props.layers[i].id)){
-        this._map.removeLayer(this.props.layers[i].id)
-        this._map.removeLayer(this.props.layers[i].id + '_outline')
-        this._map.removeSource(this.props.layers[i].id)
-        this._map.removeSource(this.props.layers[i].id + '_outline')
+    for (let i = 0; i < this.state.layersInMap.length; i++) {
+      if(this._map.getSource(this.state.layersInMap[i].id)){
+        this._map.removeLayer(this.state.layersInMap[i].id)
+        this._map.removeSource(this.state.layersInMap[i].id)
       }
+      if(this._map.getSource(this.state.layersInMap[i].id+'_outline')){
+        this._map.removeLayer(this.state.layersInMap[i].id + '_outline')
+        this._map.removeSource(this.state.layersInMap[i].id + '_outline')
+      }
+
     }
   }
 
   addLayers(){
     for (let i = 0; i < this.props.layers.length; i++) {
-      this.addPolygonLayer(this.props.layers[i])
+      this.addLayerByType(this.props.layers[i]);
+    }
+    this.state.layersInMap = this.props.layers;
+  }
+
+  addLayerByType(layer){
+    switch (layer.features[0].geometry.type) {
+      case 'Polygon':
+        this.addPolygonLayer(layer);
+        break;
+      case 'MultiPolygon':
+        this.addPolygonLayer(layer);
+        break;
+      case 'MultiLineString':
+        this.addLineLayer(layer);
+        break;
+      case 'Point':
+        this.addPointLayer(layer);
+        break;
+      default:
+        console.log('Unidentified layer type!!' + layer.type);
+        
     }
   }
+
+  addPointLayer(layer) {
+    this._map.addLayer({
+      'id': layer.id,
+      'type': 'circle',
+      'source': {
+        'type': 'geojson',
+        'data': layer
+      },
+      'layout': {'visibility': layer.visible },
+      'paint': {
+        'circle-radius': 5,
+        'circle-color': layer.fillColor,
+        'circle-opacity': 1
+      }
+    });
+  }
+
 
   addLineLayer(layer) {
     let map = this._map
@@ -87,9 +131,9 @@ class Map extends Component{
         'type': 'geojson',
         'data': layer
       },
-      'layout': {'visibility': 'visible' },
+      'layout': {'visibility': layer.visible },
       'paint': {
-        'line-color': "#FF0000",
+        'line-color': layer.borderColor,
         'line-opacity': 1,
         'line-width': 2
       }
@@ -100,7 +144,6 @@ class Map extends Component{
 
   addPolygonLayer(layer) {
     let map = this._map
-    console.log("ADDING POLYGONLAYER")
 
     map.addLayer({
       'id': layer.id,
@@ -256,7 +299,7 @@ Map.propTypes = {
   layers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    visible: PropTypes.bool.isRequired,
+    visible: PropTypes.string.isRequired,
     color: PropTypes.string.isRequired,
     border: PropTypes.string.isRequired
   }).isRequired).isRequired,

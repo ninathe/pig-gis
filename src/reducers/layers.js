@@ -10,11 +10,8 @@ const layers = (state = initialState, action) => {
         ]
 
 
-      case 'REMOVE_LAYER':
-        return { 
-          ...state,
-          layers: state.filter(function(layer){return layer != action.layer })
-        }
+      case 'DELETE_LAYER':
+        return  state.filter(function(layer){return layer.id != action.layer })
       
       case 'UPDATE_LAYER_FILL':
         return state.map((layer) => {

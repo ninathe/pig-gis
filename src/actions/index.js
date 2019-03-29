@@ -12,8 +12,8 @@ export const addLayer = layer => ({
   layer
 })
 
-export const removeLayer = layer => ({
-  type: 'REMOVE_LAYER',
+export const deleteLayer = layer => ({
+  type: 'DELETE_LAYER',
   layer
 })
 

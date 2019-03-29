@@ -1,24 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import List from '@material-ui/core/List'
+import ListSubheader from '@material-ui/core/ListSubheader';
 import Layer from './Layer' 
 
 
-const LayerList = ({ layers, updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName }) => (
-  <List>
-    {layers.length>0?(layers.map(layer =>
-      <Layer
-        layer={layer.name}
-        updateLayerVisibility={updateLayerVisibility}
-        updateLayerFill={updateLayerFill}
-        updateLayerBorder={updateLayerBorder}
-        updateLayerName={updateLayerName}
-        {...layer}
-        // onClick={() => toggleTodo(layer.id)}
-      />
-    )) : <div></div>}
-    
-  </List>
+const LayerList = ({ layers, updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName, deleteLayer }) => (
+  <React.Fragment>
+    {layers.length>0?<ListSubheader>LAYERS</ListSubheader>:null}
+    <List>
+      {layers.length>0?(layers.map(layer =>
+        <Layer
+          key={layer.id}
+          layer={layer.name}
+          updateLayerVisibility={updateLayerVisibility}
+          updateLayerFill={updateLayerFill}
+          updateLayerBorder={updateLayerBorder}
+          updateLayerName={updateLayerName}
+          deleteLayer={deleteLayer}
+          {...layer}
+        />
+      )) : <div></div>}
+      
+    </List>
+  </React.Fragment>
+  
 )
 
 

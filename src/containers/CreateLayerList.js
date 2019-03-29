@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { updateLayers, updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName } from "../actions";
+import { updateLayers, updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName, deleteLayer} from "../actions";
 import LayerList from "../components/LayerList";
 
 
@@ -12,7 +12,8 @@ const mapDispatchToProps ={
   updateLayerVisibility,
   updateLayerFill,
   updateLayerBorder, 
-  updateLayerName
+  updateLayerName,
+  deleteLayer
 };
 
 export default connect(
