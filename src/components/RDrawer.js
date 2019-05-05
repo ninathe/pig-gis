@@ -23,13 +23,6 @@ import { connect } from 'react-redux'
 
 const drawerWidth = 340;
 
-const layers = [{id: 0, name: "Vei", visible: true, color: 'red', border: 'black'}, {id: 1, name: "Skole", visible: false, color: 'pink', border: 'black'}]
-
-function mapStateToProps(state) {
-  console.log("MAPPING")
-  console.log(state) // state
-}
-
 const styles = theme => ({
   root: {
     display: 'flex',

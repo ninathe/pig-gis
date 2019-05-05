@@ -14,7 +14,6 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmb
 class Map extends Component{
   constructor(props) {
     super(props);
-    console.log(props)
     this.state = {
       layersInMap: [],
       // lng: -80.00,
@@ -40,7 +39,6 @@ class Map extends Component{
 
     map.on('load', function () {
       this.addHeatmap();
-      // this.addLineLayer(roads);
     }.bind(this));
 
      map.on('move', () => {
