@@ -12,12 +12,14 @@ import Fab from '@material-ui/core/Fab';
 import BuildIcon from '@material-ui/icons/Build';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import BufferContent from './ToolsContent/BufferContent2';
+import Buffer from './ToolsContent/Buffer';
+import Within from './ToolsContent/BufferContent2';
+import Intersection from './ToolsContent/BufferContent2';
+import Difference from './ToolsContent/BufferContent2';
+
+
+import Tools from './ToolsContent/Tools';
+
 
 
 
@@ -79,6 +81,7 @@ const DialogActions = withStyles(theme => ({
 class CustomizedDialogDemo extends React.Component {
   state = {
     open: false,
+    selectedTool: null
   };
 
   handleClickOpen = () => {
@@ -91,8 +94,32 @@ class CustomizedDialogDemo extends React.Component {
     this.setState({ open: false });
   };
 
+  ButtonClicked= (btn) => {
+    
+    this.setState({
+      selectedTool: btn,
+    });
+    console.log(this.state)
+  }  
+
+  getContent = () => {
+    switch(this.state.selectedTool) {
+      case 'Within':
+        return <ListItem><Within></Within></ListItem>;
+      case 'Buffer':
+        return <ListItem><Buffer></Buffer></ListItem>;
+      case 'Intersection':
+        return <ListItem><Intersection></Intersection></ListItem>;
+      case 'Difference':
+        return <ListItem><Difference></Difference></ListItem>;
+      default:
+        return <Tools btnClicked= {this.ButtonClicked}></Tools>;
+    }
+  }
+
   render() {
     const { classes } = this.props;
+
     return (
       <div>
         <Fab color="secondary" aria-label="Edit" className={classes.fab} onClick={this.handleClickOpen}>
@@ -108,34 +135,14 @@ class CustomizedDialogDemo extends React.Component {
           </DialogTitle>
           <DialogContent>
             <List component="nav">
-                <ListItem button>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Within" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Buffer" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Intersection" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Difference" />
-                </ListItem>
-                <ListItem>
-                  <BufferContent></BufferContent>
-                </ListItem>
-
+              {/* <Tools btnClicked= {this.ButtonClicked}></Tools>
+              {this.state.selectedTool==null?<Tools btnClicked= {this.ButtonClicked}></Tools>:<ListItem>
+                  <Buffer></Buffer>
+                </ListItem>} */}
+                {/* <ListItem>
+                  <Buffer></Buffer>
+                </ListItem> */}
+                {this.getContent()}
             </List>
           </DialogContent>
         </Dialog>
@@ -143,5 +150,7 @@ class CustomizedDialogDemo extends React.Component {
     );
   }
 }
+
+
 
 export default withStyles(styles)(CustomizedDialogDemo);

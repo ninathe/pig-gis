@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 import { connect } from "react-redux";
 import { updateLayers } from "../../actions";
 import { Layer } from 'react-mapbox-gl';
-
+import { addLayer } from '../../actions'
+import formatJson from '../utils';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
@@ -38,6 +39,7 @@ class Map extends Component{
     this._map = map;
 
     map.on('load', function () {
+      this.addDefaultLayers()
       this.addHeatmap();
     }.bind(this));
 
@@ -77,7 +79,12 @@ class Map extends Component{
 
   addLayers(){
     for (let i = 0; i < this.props.layers.length; i++) {
-      this.addLayerByType(this.props.layers[i]);
+      debugger
+      let layer = this.props.layers[i]
+      if(layer.features)
+        this.addLayerByType(this.props.layers[i]);
+      else 
+        this._map.addLayer(layer)
     }
     this.state.layersInMap = this.props.layers;
   }
@@ -100,6 +107,23 @@ class Map extends Component{
         console.log('Unidentified layer type!!' + layer.type);
         
     }
+  }
+
+  addDefaultLayer(layer){
+    this._map.addLayer({
+      'id': layer.id,
+      'type': 'circle',
+      'source': {
+        type: 'vector',
+        url: layer.url
+      },
+      'layout': {'visibility': layer.visible },
+      'paint': {
+        'circle-radius': 5,
+        'circle-color': layer.fillColor,
+        'circle-opacity': 1
+      }
+    });
   }
 
   addPointLayer(layer) {
@@ -139,6 +163,13 @@ class Map extends Component{
 
   }
 
+  getSource(layer){
+    let source = {
+      'type': 'geojson',
+      'data': layer
+    }
+    return source
+  }
 
   addPolygonLayer(layer) {
     let map = this._map
@@ -146,14 +177,11 @@ class Map extends Component{
     map.addLayer({
       'id': layer.id,
       'type': 'fill',
-      'source': {
-        'type': 'geojson',
-        'data': layer
-      },
+      'source': layer.source?layer.source:this.getSource(layer),
       'layout': {'visibility': layer.visible },
       'paint': {
         'fill-color': layer.fillColor,
-        'fill-opacity': 1
+        'fill-opacity': layer.fillOpacity
       }
     });
 
@@ -171,6 +199,31 @@ class Map extends Component{
         'line-width': 1
       }
     });
+  }
+
+  addDefaultLayers(){
+    // let map = this._map
+    // ('water', {
+    //   type: 'vector',
+    //   url: 'mapbox://ninath93.6k5pmcu8'
+    // });
+  
+    let layer = {
+      'id': 'layer_water',
+      'type': 'fill',
+      'source': {
+        type: 'vector',
+        url: 'mapbox://ninath93.6k5pmcu8'
+      },
+      'source-layer': 'Vann-81xfw3',
+      'paint': {
+        'fill-color': 'blue',
+        'fill-opacity': 1
+      }
+    };
+
+    this.props.addLayer(formatJson(layer))  
+
   }
 
 
@@ -309,7 +362,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  updateLayers
+  addLayer
 };
 
 export default connect(

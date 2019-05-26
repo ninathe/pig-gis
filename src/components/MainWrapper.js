@@ -32,7 +32,7 @@ class MapWrapper extends Component{
         <MapWrapperDiv>
           <MapContainer />
         </MapWrapperDiv> 
-        <Tools></Tools>
+        <Tools />
       </div> 
     );
   }

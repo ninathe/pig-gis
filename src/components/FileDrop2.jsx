@@ -3,13 +3,12 @@ import {DropzoneArea} from 'material-ui-dropzone';
 import { connect } from 'react-redux'
 import { addLayer, deleteLayer } from '../actions'
 import '../App.css'
+import formatJson from './utils';
 
 
 
 const Filedrop = ({dispatch}) => {
-  let layers = 0;
-  let colors = ['#ff1744', '#2979ff', '#00b8d4', '#00bfa5',  '#ff6d00', '#00bfa5', '#ffd600', '#d50000' ]
-
+  
   function setupReader(file) {
     readFile(file, function (json) {
       dispatch(addLayer(json))
@@ -29,21 +28,6 @@ const Filedrop = ({dispatch}) => {
     }
 
     reader.readAsText(file);
-  }
-
-  function formatJson(json){
-    if(!json.name)
-      json.name = "Layer"
-    if(!json.visible)
-      json.visible = "visible"
-    if(!json.id)
-      json.id = "layer-"+layers;
-    if(!json.fillColor)
-      json.fillColor = colors[layers%colors.length]
-    if(!json.borderColor)
-      json.borderColor = "black"
-    layers++;
-    return json
   }
 
   function deleteLayer(file){

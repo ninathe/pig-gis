@@ -68,7 +68,7 @@ class TextFields extends React.Component {
           helperText="Buffer in meter"
 
         />
-
+        
         <TextField
           id="standard-select-currency"
           select
