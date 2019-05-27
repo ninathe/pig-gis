@@ -32,6 +32,7 @@ import formatJson from '../utils';
 class BufferContent extends Component{
   constructor(props) {
     super(props);
+    this.state = {layer: null}
   }
 
   // Changehandler - layerselect 
@@ -70,7 +71,7 @@ class BufferContent extends Component{
       ];
 
     return (
-      <React.Fragment>
+    <React.Fragment>
     {this.props.layers.length>0?
       <form className={this.props.classes.container} autoComplete="off" id = "myform">
         <TextField
@@ -78,7 +79,7 @@ class BufferContent extends Component{
           select
           label="Layer"
           className={this.props.classes.textField}
-          // value = {values.layer}
+          value = {this.state.layer}
           onChange={this.handleChange('layer')}
           SelectProps={{
             MenuProps: {
@@ -105,8 +106,8 @@ class BufferContent extends Component{
 
         />
         <div>
-            {actions}
-        </div>
+            {actions} 
+        </div> 
         
       </form>
     :
@@ -118,8 +119,7 @@ class BufferContent extends Component{
                 Add layers in map. 
             </Typography>
         </React.Fragment>
-    }
-        
+    }   
     </React.Fragment>
       
     );

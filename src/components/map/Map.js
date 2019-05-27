@@ -98,7 +98,8 @@ class Map extends Component{
   }
 
   addLayerByType(layer){
-    switch (layer.features[0].geometry.type) {
+    let type = layer.features?layer.features[0].geometry.type : layer.geometry.type //FIX: Some layers received from Turf doesn't have features
+    switch (type) {
       case 'Polygon':
         this.addPolygonLayer(layer);
         break;
@@ -117,22 +118,6 @@ class Map extends Component{
     }
   }
 
-  // addDefaultLayer(layer){
-  //   this._map.addLayer({
-  //     'id': layer.id,
-  //     'type': 'circle',
-  //     'source': {
-  //       type: 'vector',
-  //       url: layer.url
-  //     },
-  //     'layout': {'visibility': layer.visible },
-  //     'paint': {
-  //       'circle-radius': 5,
-  //       'circle-color': layer.fillColor,
-  //       'circle-opacity': 1
-  //     }
-  //   });
-  // }
 
   addPointLayer(layer) {
     this._map.addLayer({

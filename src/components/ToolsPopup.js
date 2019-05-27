@@ -13,9 +13,10 @@ import BuildIcon from '@material-ui/icons/Build';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Buffer from './ToolsContent/Buffer';
-import Within from './ToolsContent/BufferContent2';
-import Intersection from './ToolsContent/BufferContent2';
-import Difference from './ToolsContent/BufferContent2';
+import Difference from './ToolsContent/Difference';
+
+import Within from './ToolsContent/Within';
+import Intersection from './ToolsContent/Intersection';
 
 
 import Tools from './ToolsContent/Tools';
@@ -91,7 +92,7 @@ class CustomizedDialogDemo extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, selectedTool: null });
   };
 
   ButtonClicked= (btn) => {
@@ -109,7 +110,7 @@ class CustomizedDialogDemo extends React.Component {
       case 'Intersection':
         return <ListItem><Intersection></Intersection></ListItem>;
       case 'Difference':
-        return <ListItem><Difference></Difference></ListItem>;
+        return <ListItem><Difference close ={this.handleClose}></Difference></ListItem>;
       default:
         return <Tools btnClicked= {this.ButtonClicked}></Tools>;
     }
