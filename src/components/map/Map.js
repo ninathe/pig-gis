@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import './map.css'
 import mapboxgl from 'mapbox-gl'
 import roads from './veg.json';
+import grytaNord from './trondheim-baatforening/gryta-nord.json';
+import grytaSyd from './trondheim-baatforening/gryta-syd.json';
+import nedreElvehavn from './trondheim-baatforening/nedre-elvehavn.json';
+
+
+import arealbruk from './arealbruk.json';
 import PropTypes from 'prop-types'
 import { connect } from "react-redux";
 import { updateLayers } from "../../actions";
@@ -19,9 +25,9 @@ class Map extends Component{
       layersInMap: [],
       // lng: -80.00,
       // lat: 40.438,
-      lng: 10.257952289845194, 
-      lat: 63.41008738358773,
-      zoom: 11
+      lng: 10.4, 
+      lat: 63.435,
+      zoom: 15
     };
   }
 
@@ -39,7 +45,8 @@ class Map extends Component{
     this._map = map;
 
     map.on('load', function () {
-      this.addDefaultLayers()
+      this.addDefaultLayers();
+      // this.addWaterLayer()
       this.addHeatmap();
     }.bind(this));
 
@@ -64,6 +71,7 @@ class Map extends Component{
   }
 
   deleteLayers(){
+    debugger
     for (let i = 0; i < this.state.layersInMap.length; i++) {
       if(this._map.getSource(this.state.layersInMap[i].id)){
         this._map.removeLayer(this.state.layersInMap[i].id)
@@ -79,12 +87,12 @@ class Map extends Component{
 
   addLayers(){
     for (let i = 0; i < this.props.layers.length; i++) {
-      debugger
       let layer = this.props.layers[i]
-      if(layer.features)
-        this.addLayerByType(this.props.layers[i]);
+      if(layer.source)
+        this.addVectorLayer(layer)  
       else 
-        this._map.addLayer(layer)
+        this.addLayerByType(this.props.layers[i]);
+        
     }
     this.state.layersInMap = this.props.layers;
   }
@@ -109,22 +117,22 @@ class Map extends Component{
     }
   }
 
-  addDefaultLayer(layer){
-    this._map.addLayer({
-      'id': layer.id,
-      'type': 'circle',
-      'source': {
-        type: 'vector',
-        url: layer.url
-      },
-      'layout': {'visibility': layer.visible },
-      'paint': {
-        'circle-radius': 5,
-        'circle-color': layer.fillColor,
-        'circle-opacity': 1
-      }
-    });
-  }
+  // addDefaultLayer(layer){
+  //   this._map.addLayer({
+  //     'id': layer.id,
+  //     'type': 'circle',
+  //     'source': {
+  //       type: 'vector',
+  //       url: layer.url
+  //     },
+  //     'layout': {'visibility': layer.visible },
+  //     'paint': {
+  //       'circle-radius': 5,
+  //       'circle-color': layer.fillColor,
+  //       'circle-opacity': 1
+  //     }
+  //   });
+  // }
 
   addPointLayer(layer) {
     this._map.addLayer({
@@ -162,14 +170,7 @@ class Map extends Component{
     });
 
   }
-
-  getSource(layer){
-    let source = {
-      'type': 'geojson',
-      'data': layer
-    }
-    return source
-  }
+  
 
   addPolygonLayer(layer) {
     let map = this._map
@@ -177,7 +178,10 @@ class Map extends Component{
     map.addLayer({
       'id': layer.id,
       'type': 'fill',
-      'source': layer.source?layer.source:this.getSource(layer),
+      'source': {
+        'type': 'geojson',
+        'data': layer
+      },
       'layout': {'visibility': layer.visible },
       'paint': {
         'fill-color': layer.fillColor,
@@ -201,28 +205,31 @@ class Map extends Component{
     });
   }
 
-  addDefaultLayers(){
-    // let map = this._map
-    // ('water', {
-    //   type: 'vector',
-    //   url: 'mapbox://ninath93.6k5pmcu8'
-    // });
-  
-    let layer = {
-      'id': 'layer_water',
+  addVectorLayer(layer){ 
+    this._map.addLayer({
+      'id': layer.id,
       'type': 'fill',
       'source': {
         type: 'vector',
-        url: 'mapbox://ninath93.6k5pmcu8'
+        url: layer.source
       },
-      'source-layer': 'Vann-81xfw3',
+      'source-layer': layer.sourceLayer,
+      'layout': {'visibility': layer.visible },
       'paint': {
-        'fill-color': 'blue',
-        'fill-opacity': 1
+        'fill-color': layer.fillColor,
+        'fill-opacity': layer.fillOpacity,
       }
-    };
+    })
+  }
 
-    this.props.addLayer(formatJson(layer))  
+
+  addDefaultLayers(){
+    let formated = formatJson(nedreElvehavn,'Nedre elvehavn', true)
+    this.props.addLayer(formated) 
+    let format2 = formatJson(grytaNord, 'Gryta nord', true)
+    this.props.addLayer(format2) 
+    let format3 = formatJson(grytaSyd, 'Gryta syd', true)
+    this.props.addLayer(format3) 
 
   }
 
@@ -346,15 +353,6 @@ class Map extends Component{
 }
 
 
-Map.propTypes = {
-  layers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    visible: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-    border: PropTypes.string.isRequired
-  }).isRequired).isRequired,
-}
 
 
 const mapStateToProps = (state) => ({

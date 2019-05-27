@@ -8,7 +8,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InfoIcon from '@material-ui/icons/Info';
 import * as turf from '@turf/turf'
 import { addLayer } from '../../actions'
-// import IconButton from '@material-ui/core/IconButton';
 import formatJson from '../utils';
 
 
@@ -30,26 +29,29 @@ import formatJson from '../utils';
     },
   });
 
-class ToolsPopup extends Component{
+class BufferContent extends Component{
   constructor(props) {
     super(props);
-  
   }
 
+  // Changehandler - layerselect 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
+
+  // Changehandler - bufferfield
   updateText = name => event => {
     this.setState({ [name]: event.target.value });
   };
 
-  doSomething(){
-    debugger
+  submitBuffer(){
     if(this.state != null && this.state.layer && this.state.bufferVal){
       let geom = this.props.layers.filter(layer => layer.id == this.state.layer)[0];
       let buffer = turf.buffer(geom, this.state.bufferVal, {units: 'meters'});      //Buffer geojson
       let bufferName = geom.name + "_Buffer"
       this.props.addLayer(formatJson(buffer,bufferName, true, 0.5))                 //formatJson buffer-geojson, name, noBorder, fill-opacity
+      this.props.close();
+
     } else{
       alert("Velg layer og bufferverdi")
     }
@@ -62,7 +64,7 @@ class ToolsPopup extends Component{
         <Button
           primary={true}
           form="myform"
-          onClick={this.doSomething.bind(this)}
+          onClick={this.submitBuffer.bind(this)}
           >SUBMIT
           </Button>,
       ];
@@ -71,22 +73,12 @@ class ToolsPopup extends Component{
       <React.Fragment>
     {this.props.layers.length>0?
       <form className={this.props.classes.container} autoComplete="off" id = "myform">
-      
-        <TextField
-          id="standard-name"
-          label="Buffer"
-          className={this.props.classes.textField}
-          onChange={this.updateText('bufferVal')}
-          margin="normal"
-          helperText="Buffer in meter"
-
-        />
-        
         <TextField
           id="standard-select-currency"
           select
           label="Layer"
           className={this.props.classes.textField}
+          // value = {values.layer}
           onChange={this.handleChange('layer')}
           SelectProps={{
             MenuProps: {
@@ -102,9 +94,19 @@ class ToolsPopup extends Component{
             </MenuItem>
           ))}
         </TextField>
+        
+        <TextField
+          id="standard-name"
+          label="Buffer"
+          className={this.props.classes.textField}
+          onChange={this.updateText('bufferVal')}
+          margin="normal"
+          helperText="Value in meter"
+
+        />
         <div>
             {actions}
-          </div>
+        </div>
         
       </form>
     :
@@ -133,16 +135,8 @@ const mapDispatchToProps = {
   addLayer
 };
 
-// const mapDispatchToProps ={
-//   updateLayerVisibility,
-//   updateLayerFill,
-//   updateLayerBorder, 
-//   updateLayerName,
-//   deleteLayer
-// };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(ToolsPopup));
-// export default connect()(Filedrop);
+)(withStyles(styles)(BufferContent));

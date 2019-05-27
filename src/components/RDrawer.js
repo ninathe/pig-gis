@@ -12,7 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import FileDrop from './FileDrop2';
+import FileDrop from './FileDrop';
 import Layer from './Layer';
 import CreateLayerList from '../containers/CreateLayerList'
 import LayerList from './LayerList'

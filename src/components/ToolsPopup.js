@@ -95,11 +95,9 @@ class CustomizedDialogDemo extends React.Component {
   };
 
   ButtonClicked= (btn) => {
-    
     this.setState({
       selectedTool: btn,
     });
-    console.log(this.state)
   }  
 
   getContent = () => {
@@ -107,7 +105,7 @@ class CustomizedDialogDemo extends React.Component {
       case 'Within':
         return <ListItem><Within></Within></ListItem>;
       case 'Buffer':
-        return <ListItem><Buffer></Buffer></ListItem>;
+        return <ListItem><Buffer close ={this.handleClose}></Buffer></ListItem>;
       case 'Intersection':
         return <ListItem><Intersection></Intersection></ListItem>;
       case 'Difference':
@@ -135,13 +133,6 @@ class CustomizedDialogDemo extends React.Component {
           </DialogTitle>
           <DialogContent>
             <List component="nav">
-              {/* <Tools btnClicked= {this.ButtonClicked}></Tools>
-              {this.state.selectedTool==null?<Tools btnClicked= {this.ButtonClicked}></Tools>:<ListItem>
-                  <Buffer></Buffer>
-                </ListItem>} */}
-                {/* <ListItem>
-                  <Buffer></Buffer>
-                </ListItem> */}
                 {this.getContent()}
             </List>
           </DialogContent>
