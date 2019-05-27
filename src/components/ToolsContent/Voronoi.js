@@ -33,8 +33,7 @@ class DifferenceContent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-        layer1: null,
-        layer2: null      
+        layer: null
     }
   }
 
@@ -44,17 +43,23 @@ class DifferenceContent extends Component{
   };
 
   submitDifference(){
-    if(this.state == null || this.state.layer1 == null || this.state.layer2 == null){
-      alert("Velg to lag til kalkulering")
-    } else if(this.state.layer1 == this.state.layer2)
-        alert("Lag 1 og Lag 2 må være forskjellige")  
+    if(this.state.layer == null ){
+      alert("Velg et lag til å lage voronoi")
+    } 
     else{
-        debugger
-      let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0].features[0];
-      let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)[0].features[0];
-      let difference = turf.difference(geom1, geom2);      //Difference geojson
-      let differenceName = geom1.properties.name+"_"+geom2.properties.name + "_Difference"
-      this.props.addLayer(formatJson(difference,differenceName, true, 0.5))    //formatJson difference-geojson, name, noBorder, fill-opacity
+      // layer.features[0].geometry.type == "Point"
+      let geom = this.props.layers.filter(layer => layer.id == this.state.layer)[0];
+      // var options = {
+      //   bbox: [-70, 40, -60, 60]
+      // };
+      // var points = turf.randomPoint(100, options);
+      debugger
+      var voronoiPolygons = turf.voronoi(geom);
+      let name = geom.name+"_voronoi";
+      // let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0].features[0];
+      // let difference = turf.difference(geom1, geom2);      //Difference geojson
+      // let differenceName = geom1.properties.name+"_"+geom2.properties.name + "_Difference"
+      this.props.addLayer(formatJson(voronoiPolygons,name, true, 0.5))    //formatJson difference-geojson, name, noBorder, fill-opacity
       this.props.close();
     } 
    
@@ -81,7 +86,7 @@ class DifferenceContent extends Component{
           label="Layer 1"
           className={this.props.classes.textField}
           value = {this.state.layer1}
-          onChange={this.handleChange('layer1')}
+          onChange={this.handleChange('layer')}
           SelectProps={{
             MenuProps: {
               className: this.props.classes.menu,
@@ -90,28 +95,9 @@ class DifferenceContent extends Component{
           helperText="Select layer"
           margin="normal"
         >
-          {this.props.layers.map(layer => (
-            <MenuItem key={layer.id} value={layer.id}>
-              {layer.name}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          id="layer2-select"
-          select
-          label="Layer 2"
-          className={this.props.classes.textField}
-          value = {this.state.layer2}
-          onChange={this.handleChange('layer2')}
-          SelectProps={{
-            MenuProps: {
-              className: this.props.classes.menu,
-            },
-          }}
-          helperText="Select layer"
-          margin="normal"
-        >
-          {this.props.layers.map(layer => (
+          {this.props.layers
+          .filter(layer =>{return layer.features[0].geometry.type == "Point"})
+          .map(layer => (  
             <MenuItem key={layer.id} value={layer.id}>
               {layer.name}
             </MenuItem>

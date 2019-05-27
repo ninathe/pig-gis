@@ -44,17 +44,21 @@ class DifferenceContent extends Component{
   };
 
   submitDifference(){
-    if(this.state != null && this.state.layer1 && this.state.layer2){
-        debugger
+    if(this.state == null || this.state.layer1 == null || this.state.layer2 == null){
+      alert("Velg to lag til kalkulering")
+    } else if(this.state.layer1 == this.state.layer2)
+        alert("Lag 1 og Lag 2 må være forskjellige")  
+    else{
       let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0].features[0];
       let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)[0].features[0];
       let difference = turf.difference(geom1, geom2);      //Difference geojson
-      let differenceName = geom1.properties.name+"_"+geom2.properties.name + "_Difference"
-      this.props.addLayer(formatJson(difference,differenceName, true, 0.5))    //formatJson difference-geojson, name, noBorder, fill-opacity
-      this.props.close();
-    } else{
-      alert("Velg to lag til kalkulering")
-    }
+      if(difference != null){
+        let differenceName = geom1.properties.name+"_"+geom2.properties.name + "_Difference"
+        this.props.addLayer(formatJson(difference,differenceName, true, 0.5))    //formatJson difference-geojson, name, noBorder, fill-opacity
+        this.props.close();
+      }
+      
+    } 
    
   }
 
@@ -137,6 +141,8 @@ class DifferenceContent extends Component{
   }
 }
 
+
+//REDUX
 
 const mapStateToProps = (state) => ({
   layers: state.layers

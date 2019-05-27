@@ -98,6 +98,7 @@ class Map extends Component{
   }
 
   addLayerByType(layer){
+    debugger
     let type = layer.features?layer.features[0].geometry.type : layer.geometry.type //FIX: Some layers received from Turf doesn't have features
     switch (type) {
       case 'Polygon':

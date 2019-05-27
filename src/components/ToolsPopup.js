@@ -12,9 +12,10 @@ import Fab from '@material-ui/core/Fab';
 import BuildIcon from '@material-ui/icons/Build';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+
 import Buffer from './ToolsContent/Buffer';
 import Difference from './ToolsContent/Difference';
-
+import Voronoi from './ToolsContent/Voronoi';
 import Within from './ToolsContent/Within';
 import Intersection from './ToolsContent/Intersection';
 
@@ -104,13 +105,15 @@ class CustomizedDialogDemo extends React.Component {
   getContent = () => {
     switch(this.state.selectedTool) {
       case 'Within':
-        return <ListItem><Within></Within></ListItem>;
+        return <ListItem><Within close ={this.handleClose}></Within></ListItem>;
       case 'Buffer':
         return <ListItem><Buffer close ={this.handleClose}></Buffer></ListItem>;
       case 'Intersection':
-        return <ListItem><Intersection></Intersection></ListItem>;
+        return <ListItem><Intersection close ={this.handleClose}></Intersection></ListItem>;
       case 'Difference':
         return <ListItem><Difference close ={this.handleClose}></Difference></ListItem>;
+      case 'Voronoi':
+        return <ListItem><Voronoi close ={this.handleClose}></Voronoi></ListItem>;
       default:
         return <Tools btnClicked= {this.ButtonClicked}></Tools>;
     }
