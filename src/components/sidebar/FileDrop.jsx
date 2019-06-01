@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {DropzoneArea} from 'material-ui-dropzone';
 import { connect } from 'react-redux'
-import { addLayer, deleteLayer } from '../actions'
-import '../App.css'
-import formatJson from './utils';
+import { addLayer, deleteLayer } from '../../actions'
+import '../../App.css'
+import formatJson from '../utils';
 
 
 

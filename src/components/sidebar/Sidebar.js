@@ -1,24 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+
+//Material ui
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
+//Components and containers
 import FileDrop from './FileDrop';
-import Layer from './Layer';
-import CreateLayerList from '../containers/CreateLayerList'
-import LayerList from './LayerList'
-import { connect } from 'react-redux'
-
-
+import CreateLayerList from '../../containers/CreateLayerList'
 
 
 const drawerWidth = 340;
@@ -80,7 +78,7 @@ const styles = theme => ({
   },
 });
 
-class PersistentDrawerLeft extends React.Component {
+class Sidebar extends React.Component {
   state = {
     open: false,
     // receivedJson: this.props.receivedJson
@@ -119,7 +117,7 @@ class PersistentDrawerLeft extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
-              TRASH FINDER
+              GISLYFE
             </Typography>
           </Toolbar>
         </AppBar>
@@ -139,10 +137,7 @@ class PersistentDrawerLeft extends React.Component {
           </div>
           <FileDrop ></FileDrop>
           <Divider />
-          {/* <LayerList layers ={layers}></LayerList> */}
           <CreateLayerList></CreateLayerList>
-          {/* <Layer layerName = "Vei"></Layer> */}
-          {/* <Layer layerName = "Skolekrets"></Layer> */}
           
         
         </Drawer>
@@ -151,9 +146,9 @@ class PersistentDrawerLeft extends React.Component {
   }
 }
 
-PersistentDrawerLeft.propTypes = {
+Sidebar.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(PersistentDrawerLeft);
+export default withStyles(styles, { withTheme: true })(Sidebar);

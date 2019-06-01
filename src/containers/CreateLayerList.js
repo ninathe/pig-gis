@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
-import { updateLayers, updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName, deleteLayer} from "../actions";
-import LayerList from "../components/LayerList";
+import { updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName, deleteLayer} from "../actions"; //Redux
+import LayerList from "../components/sidebar/LayerList";
 
 
 const mapStateToProps = (state) => ({

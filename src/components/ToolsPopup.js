@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+//Material-ui
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -12,15 +12,13 @@ import Fab from '@material-ui/core/Fab';
 import BuildIcon from '@material-ui/icons/Build';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
-import Buffer from './ToolsContent/Buffer';
-import Difference from './ToolsContent/Difference';
-import Voronoi from './ToolsContent/Voronoi';
-import Within from './ToolsContent/Within';
-import Intersection from './ToolsContent/Intersection';
-
-
-import Tools from './ToolsContent/Tools';
+//Components
+import Buffer from './tools/Buffer';
+import Difference from './tools/Difference';
+import Voronoi from './tools/Voronoi';
+import Within from './tools/Within';
+import Intersection from './tools/Intersection';
+import Tools from './tools/Tools';
 
 
 

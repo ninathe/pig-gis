@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, {Component} from 'react';
 import MapContainer from './map/Map'
-import Navbar from './RDrawer';
+import Sidebar from './sidebar/Sidebar';
 import Tools from './ToolsPopup';
 
 
@@ -28,7 +28,7 @@ class MapWrapper extends Component{
   render() {
     return (
       <div>
-        <Navbar updateMapLayers={this.updateMapLayers.bind(this)}/>
+        <Sidebar updateMapLayers={this.updateMapLayers.bind(this)}/>
         <MapWrapperDiv>
           <MapContainer />
         </MapWrapperDiv> 
