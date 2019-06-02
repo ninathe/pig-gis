@@ -3,7 +3,6 @@ let lastId = 0;
 let colors = ['#ff1744', '#2979ff', '#00b8d4', '#00bfa5',  '#ff6d00', '#00bfa5', '#ffd600', '#d50000' ]
 
 export default function formatJson(json, name, noBorder, opacity) {
-    debugger  
     if(!json.name)
       json.name = "Layer"
     if(name)
@@ -22,4 +21,3 @@ export default function formatJson(json, name, noBorder, opacity) {
     lastId++;
     return json
 }
-// exports.formatJson = formatJson;

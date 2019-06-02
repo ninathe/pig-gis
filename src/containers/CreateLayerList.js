@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName, deleteLayer} from "../actions"; //Redux
+import { updateLayerVisibility, updateLayerFill, updateLayerBorder, updateLayerName, deleteLayer} from "../actions"; //Redux actions
 import LayerList from "../components/sidebar/LayerList";
 
 

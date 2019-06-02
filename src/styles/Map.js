@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../../styles/map.css'
+import '../styles/map.css'
 import mapboxgl from 'mapbox-gl'
 //json files in map
 import grytaNord from './mapLayers/gryta-nord.json';
@@ -94,7 +94,6 @@ class Map extends Component{
 
   addLayerByType(layer){
     debugger
-    let type = layer.features?layer.features[0].geometry.type : layer.geometry.type //FIX: Some layers received from Turf doesn't have features
     switch (type) {
       case 'Polygon':
         this.addPolygonLayer(layer);

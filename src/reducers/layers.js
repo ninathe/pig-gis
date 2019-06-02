@@ -9,7 +9,6 @@ const layers = (state = initialState, action) => {
           ...state.slice(state.length)
         ]
 
-
       case 'DELETE_LAYER':
         return  state.filter(function(layer){return layer.id != action.layer })
       
@@ -58,13 +57,6 @@ const layers = (state = initialState, action) => {
           }
           return layer;
         });
-
-      case 'UPDATE_LAYERS':
-        return { 
-          // debugger
-          // ...state,
-          // layers: state.layers.filter(function(layer){return layer != action.layer })
-        }
 
       case 'TOGGLE_TODO':
         return state.map(todo =>

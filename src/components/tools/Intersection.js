@@ -6,10 +6,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { TextField, Typography, IconButton, Button } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import InfoIcon from '@material-ui/icons/Info';
-import * as turf from '@turf/turf'
 import { addLayer } from '../../actions'
+import  intersect from '@turf/intersect';
+import * as turf from '@turf/turf'
+import doDoubleFeatureAction from './doDoubleFeatureAction';
 import formatJson from '../utils';
-
 
   const styles = theme => ({
     container: {
@@ -44,32 +45,23 @@ class DifferenceContent extends Component{
   };
 
   submitDifference(){
-    if(this.state == null || this.state.layer1 == null || this.state.layer2 == null){
-      alert("Velg to lag til kalkulering")
-    } else if(this.state.layer1 == this.state.layer2)
-        alert("Lag 1 og Lag 2 må være forskjellige")  
+    if(this.state.layer1 == null ||this.state.layer2 == null)
+      alert("Velg to lag til utregning.")
+    else if(this.state.layer1 == this.state.layer2)
+      alert("Vennligst velg 2 forskjellige lag.")
+    
+    //Get geojson from state 
+    let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0]  
+    let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)[0]
+    let intersection = doDoubleFeatureAction(geom1, geom2, turf.intersect, "intersection")
+    
+    if(intersection.features.length == 1 && intersection.features[0] == null)
+      alert("Det er ingen overlapp mellom valgte lag.")
     else{
-        
-      let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)
-      let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)
       debugger
-      let intersection = turf.intersect(this.getGeometry(geom1), this.getGeometry(geom2));      //Difference geojson
-      if(intersection != null){
-        let intersectionName = geom1.properties.name+"_"+geom2.properties.name + "_Intersection"
-        this.props.addLayer(formatJson(intersection,intersectionName, true, 0.5))    //formatJson difference-geojson, name, noBorder, fill-opacity
-        this.props.close();
-      } else {
-          alert("There is no intersection between these layers")
-      }
-      
-    } 
-   
-  }
-
-  getGeometry(layer){
-    let coords = layer[0].features[0].geometry.coordinates;
-    let test = coords.toString().split(','); 
-    return test
+      this.props.addLayer(formatJson(intersection))    //formatJson difference-geojson, name, noBorder, fill-opacity
+      this.props.close();
+    }
   }
 
 
@@ -102,11 +94,15 @@ class DifferenceContent extends Component{
           helperText="Select layer"
           margin="normal"
         >
-          {this.props.layers.map(layer => (
+          {this.props.layers
+          .filter(layer =>{return layer.features[0].geometry.type == "Polygon"||layer.features[0].geometry.type == "MultiPolygon"})
+          .map(layer => (  
             <MenuItem key={layer.id} value={layer.id}>
               {layer.name}
             </MenuItem>
           ))}
+
+       
         </TextField>
         <TextField
           id="layer2-select"
@@ -123,7 +119,9 @@ class DifferenceContent extends Component{
           helperText="Select layer"
           margin="normal"
         >
-          {this.props.layers.map(layer => (
+          {this.props.layers
+          .filter(layer =>{return layer.features[0].geometry.type == "Polygon"||layer.features[0].geometry.type == "MultiPolygon"}) //only Polygons and multipolygons are accepted
+          .map(layer => (  
             <MenuItem key={layer.id} value={layer.id}>
               {layer.name}
             </MenuItem>

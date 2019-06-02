@@ -27,7 +27,6 @@ const LayerList = ({ layers, updateLayerVisibility, updateLayerFill, updateLayer
   
 )
 
-
 LayerList.propTypes = {
   layers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,

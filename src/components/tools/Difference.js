@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-import { updateLayers } from "../../actions";
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Typography, IconButton, Button } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,6 +7,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import * as turf from '@turf/turf'
 import { addLayer } from '../../actions'
 import formatJson from '../utils';
+
 
 
   const styles = theme => ({
@@ -113,7 +112,9 @@ class DifferenceContent extends Component{
           helperText="Select layer"
           margin="normal"
         >
-          {this.props.layers.map(layer => (
+          {this.props.layers
+          .filter(layer =>{return layer.features[0].geometry.type == "Polygon"||layer.features[0].geometry.type == "MultiPolygon"}) //only Polygons and multipolygons are accepted
+          .map(layer => (  
             <MenuItem key={layer.id} value={layer.id}>
               {layer.name}
             </MenuItem>
