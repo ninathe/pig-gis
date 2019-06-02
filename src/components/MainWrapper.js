@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, {Component} from 'react';
 import MapContainer from './map/Map'
 import Sidebar from './sidebar/Sidebar';
-import Tools from './ToolsPopup';
+import Tools from './tools/ToolsPopup';
 
 
 const MapWrapperDiv = styled.div`

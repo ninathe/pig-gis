@@ -13,12 +13,12 @@ import BuildIcon from '@material-ui/icons/Build';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 //Components
-import Buffer from './tools/Buffer';
-import Difference from './tools/Difference';
-import Voronoi from './tools/Voronoi';
-import Within from './tools/Within';
-import Intersection from './tools/Intersection';
-import Tools from './tools/Tools';
+import Buffer from './Buffer';
+import Difference from './Difference';
+import Voronoi from './Voronoi';
+import Within from './Within';
+import Intersection from './Intersection';
+import Tools from './Tools';
 
 
 

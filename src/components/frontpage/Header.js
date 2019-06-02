@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Button} from "../ButtonComponents";
+import {Button} from "./ButtonComponents";
 
 
 const HeaderDiv = styled.div`
