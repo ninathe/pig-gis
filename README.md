@@ -14,6 +14,8 @@ This is a project made as part of the course TBA4251 Programming in Geomatics at
 - Upload new layer (GeoJSON)
 - Edit styling of layer
 
+The project is live on https://ninathe.github.io/Gislyfe/
+Tuturials on how to use the application, can be found in the Tuturial-folder.
 
 NB:
 The filename extension must be '.json' and not '.geojson'. Simply renaming the file will make it work.
