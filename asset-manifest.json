@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/github.io/Gislyfe/static/css/main.26dd8bd2.chunk.css",
-    "main.js": "/github.io/Gislyfe/static/js/main.62facaba.chunk.js",
-    "main.js.map": "/github.io/Gislyfe/static/js/main.62facaba.chunk.js.map",
-    "runtime~main.js": "/github.io/Gislyfe/static/js/runtime~main.ab96dce8.js",
-    "runtime~main.js.map": "/github.io/Gislyfe/static/js/runtime~main.ab96dce8.js.map",
-    "static/js/2.6b9432a0.chunk.js": "/github.io/Gislyfe/static/js/2.6b9432a0.chunk.js",
-    "static/js/2.6b9432a0.chunk.js.map": "/github.io/Gislyfe/static/js/2.6b9432a0.chunk.js.map",
-    "index.html": "/github.io/Gislyfe/index.html",
-    "precache-manifest.6b7cbb585abc3a5e87c397b6b65c295e.js": "/github.io/Gislyfe/precache-manifest.6b7cbb585abc3a5e87c397b6b65c295e.js",
-    "service-worker.js": "/github.io/Gislyfe/service-worker.js",
-    "static/css/main.26dd8bd2.chunk.css.map": "/github.io/Gislyfe/static/css/main.26dd8bd2.chunk.css.map"
+    "main.css": "/Gislyfe/static/css/main.26dd8bd2.chunk.css",
+    "main.js": "/Gislyfe/static/js/main.590bc56c.chunk.js",
+    "main.js.map": "/Gislyfe/static/js/main.590bc56c.chunk.js.map",
+    "runtime~main.js": "/Gislyfe/static/js/runtime~main.174b03e2.js",
+    "runtime~main.js.map": "/Gislyfe/static/js/runtime~main.174b03e2.js.map",
+    "static/js/2.266ae10c.chunk.js": "/Gislyfe/static/js/2.266ae10c.chunk.js",
+    "static/js/2.266ae10c.chunk.js.map": "/Gislyfe/static/js/2.266ae10c.chunk.js.map",
+    "index.html": "/Gislyfe/index.html",
+    "precache-manifest.6d0cd9572baac4aa51590e35eaac827e.js": "/Gislyfe/precache-manifest.6d0cd9572baac4aa51590e35eaac827e.js",
+    "service-worker.js": "/Gislyfe/service-worker.js",
+    "static/css/main.26dd8bd2.chunk.css.map": "/Gislyfe/static/css/main.26dd8bd2.chunk.css.map"
   }
 }
