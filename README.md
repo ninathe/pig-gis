@@ -1,13 +1,13 @@
 # GISLYFE
 This is a project made as part of the course TBA4251 Programming in Geomatics at Norwegian University of Science and Technology (NTNU). The application is meant to be an introduction to geographic data processing. Users can upload data from geojsons, or use already included layers to do simple geoprocessing on the data.
 
-##Built With
+## Built With
 - React and Redux
 - Mapbox GL JS 
 - Turf
 - Material-UI
 
-##Functionality
+## Functionality
 - Buffer
 - Difference
 - Intersection (Between polygons)
@@ -16,4 +16,3 @@ This is a project made as part of the course TBA4251 Programming in Geomatics at
 
 NB:
 The filename extension must be '.json' and not '.geojson'. Simply renaming the file will make it work.
-Supported Coordinate system is Projection: latlnt Datum: WGS 84 EPSG: 4326
