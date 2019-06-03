@@ -48,11 +48,12 @@ class DifferenceContent extends Component{
     } else if(this.state.layer1 == this.state.layer2)
         alert("Lag 1 og Lag 2 må være forskjellige")  
     else{
-      let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0].features[0];
-      let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)[0].features[0];
-      let difference = turf.difference(geom1, geom2);      //Difference geojson
+      let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0];
+      let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)[0];
+      let difference = turf.difference(geom1.features[0], geom2.features[0]);      //Difference geojson
       if(difference != null){
-        let differenceName = geom1.properties.name+"_"+geom2.properties.name + "_Difference"
+        debugger
+        let differenceName = geom1.name+"_"+geom2.name + "_Difference"
         this.props.addLayer(formatJson(difference,differenceName, true, 0.5))    //formatJson difference-geojson, name, noBorder, fill-opacity
         this.props.close();
       }

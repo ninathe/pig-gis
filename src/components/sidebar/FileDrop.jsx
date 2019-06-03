@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { addLayer } from '../../actions'
 import '../../styles/App.css'
 import formatJson from '../utils';
-import validator from 'validator';
 
 
 const Filedrop = ({dispatch}) => {

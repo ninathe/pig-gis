@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from "react-redux";
-import { updateLayers } from "../../actions";
 import { withStyles } from '@material-ui/core/styles';
 import { TextField, Typography, IconButton, Button } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -9,6 +7,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import * as turf from '@turf/turf'
 import { addLayer } from '../../actions'
 import formatJson from '../utils';
+
 
 
   const styles = theme => ({
@@ -29,12 +28,12 @@ import formatJson from '../utils';
     },
   });
 
-class DifferenceContent extends Component{
+class WithinContent extends Component{
   constructor(props) {
     super(props);
     this.state = {
-        layer1: null,
-        layer2: null      
+        layer1: null, //Points
+        layer2: null  //Polygon/Multipolygon    
     }
   }
 
@@ -43,19 +42,20 @@ class DifferenceContent extends Component{
     this.setState({ [name]: event.target.value });
   };
 
-  submitDifference(){
+  submitWithin(){
     if(this.state == null || this.state.layer1 == null || this.state.layer2 == null){
       alert("Velg to lag til kalkulering")
-    } else if(this.state.layer1 == this.state.layer2)
-        alert("Lag 1 og Lag 2 må være forskjellige")  
+    } 
     else{
-        debugger
-      let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0].features[0];
-      let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)[0].features[0];
-      let difference = turf.difference(geom1, geom2);      //Difference geojson
-      let differenceName = geom1.properties.name+"_"+geom2.properties.name + "_Difference"
-      this.props.addLayer(formatJson(difference,differenceName, true, 0.5))    //formatJson difference-geojson, name, noBorder, fill-opacity
-      this.props.close();
+      let geom1 = this.props.layers.filter(layer => layer.id == this.state.layer1)[0];
+      let geom2 = this.props.layers.filter(layer => layer.id == this.state.layer2)[0];
+      let within = turf.pointsWithinPolygon(geom1, geom2);      //Witn´ geojson
+      if(within != null){
+        let withinName = geom1.name+"_"+geom2.name + "_Within"
+        this.props.addLayer(formatJson(within,withinName, true, 0.5))    //formatJson within-geojson, name, noBorder, fill-opacity
+        this.props.close();
+      }
+      
     } 
    
   }
@@ -66,7 +66,7 @@ class DifferenceContent extends Component{
         <Button
           primary={true}
           form="myform"
-          onClick={this.submitDifference.bind(this)}
+          onClick={this.submitWithin.bind(this)}
           >SUBMIT
           </Button>,
       ];
@@ -87,10 +87,13 @@ class DifferenceContent extends Component{
               className: this.props.classes.menu,
             },
           }}
-          helperText="Select layer"
+          helperText="Select point-layer"
           margin="normal"
         >
-          {this.props.layers.map(layer => (
+          
+          {this.props.layers
+          .filter(layer =>{return layer.features[0].geometry.type == "Point"}) //only Points are accepted
+          .map(layer => (  
             <MenuItem key={layer.id} value={layer.id}>
               {layer.name}
             </MenuItem>
@@ -111,7 +114,10 @@ class DifferenceContent extends Component{
           helperText="Select layer"
           margin="normal"
         >
-          {this.props.layers.map(layer => (
+
+          {this.props.layers
+          .filter(layer =>{return layer.features[0].geometry.type == "Polygon"||layer.features[0].geometry.type == "MultiPolygon"}) //only Polygons and multipolygons are accepted
+          .map(layer => (  
             <MenuItem key={layer.id} value={layer.id}>
               {layer.name}
             </MenuItem>
@@ -154,4 +160,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(DifferenceContent));
+)(withStyles(styles)(WithinContent));

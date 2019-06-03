@@ -2,7 +2,7 @@
   "name": "gislyfe",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ninathe/github.io/Gislyfe",
+  "homepage": "https://ninathe.github.io/Gislyfe",
   "dependencies": {
     "@mapbox/mapbox-gl-geocoder": "^3.1.1",
     "@material-ui/core": "^3.9.2",
@@ -23,7 +23,7 @@
     "react-map-gl": "^3.1.5",
     "react-mapbox-gl": "^3.4.0",
     "react-redux": "^6.0.0",
-    "react-scripts": "1.0.17",
+    "react-scripts": "^3.0.1",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "shapefile": "^0.6.6",
@@ -43,5 +43,17 @@
   },
   "devDependencies": {
     "json-loader": "^0.5.7"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
