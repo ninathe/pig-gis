@@ -15,7 +15,6 @@ import ListItem from '@material-ui/core/ListItem';
 //Components
 import Buffer from './Buffer';
 import Difference from './Difference';
-import Voronoi from './Voronoi';
 import Within from './Within';
 import Intersection from './Intersection';
 import Tools from './Tools';
@@ -110,8 +109,6 @@ class CustomizedDialogDemo extends React.Component {
         return <ListItem><Intersection close ={this.handleClose}></Intersection></ListItem>;
       case 'Difference':
         return <ListItem><Difference close ={this.handleClose}></Difference></ListItem>;
-      case 'Voronoi':
-        return <ListItem><Voronoi close ={this.handleClose}></Voronoi></ListItem>;
       default:
         return <Tools btnClicked= {this.ButtonClicked}></Tools>;
     }

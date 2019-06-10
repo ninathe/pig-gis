@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+//Material ui
 import List from '@material-ui/core/List'
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Layer from './Layer' 
@@ -26,14 +26,5 @@ const LayerList = ({ layers, updateLayerVisibility, updateLayerFill, updateLayer
   </React.Fragment>
   
 )
-
-LayerList.propTypes = {
-  layers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    visible: PropTypes.bool.isRequired,
-    color: PropTypes.string.isRequired,
-    border: PropTypes.string.isRequired
-  }).isRequired).isRequired,
-}
 
 export default LayerList

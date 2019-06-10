@@ -21,6 +21,7 @@ import CreateLayerList from '../../containers/CreateLayerList'
 
 const drawerWidth = 340;
 
+//Styling for material ui component
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -81,7 +82,6 @@ const styles = theme => ({
 class Sidebar extends React.Component {
   state = {
     open: false,
-    // receivedJson: this.props.receivedJson
   };
 
   handleDrawerOpen = () => {
@@ -96,7 +96,7 @@ class Sidebar extends React.Component {
     const { classes, theme } = this.props;
     const { open } = this.state;
 
-
+    //GUI
     return (
       <div className={classes.root}>
         <AppBar

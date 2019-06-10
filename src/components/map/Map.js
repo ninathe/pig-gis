@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import '../../styles/map.css'
 import mapboxgl from 'mapbox-gl'
-//json files in map
+//Default map layers
 import grytaNord from './mapLayers/gryta-nord.json';
 import grytaSyd from './mapLayers/gryta-syd.json';
 import nedreElvehavn from './mapLayers/nedre-elvehavn.json';
-
 //Redux
 import { connect } from "react-redux";
 import { addLayer } from '../../actions'
-
+//Util function
 import formatJson from '../utils';
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -32,19 +31,19 @@ class Map extends Component{
 
     const map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: 'mapbox://styles/mapbox/light-v10',
+      style: 'mapbox://styles/mapbox/light-v10', //Style of map 
       center: [lng, lat],
       zoom
     });
     
     this._map = map;
-    // Add zoom and rotation controls to the map.
-    map.addControl(new mapboxgl.NavigationControl());
 
+    //Adding default layers when map has been loaded
     map.on('load', function () {
       this.addDefaultLayers();
     }.bind(this));
 
+    //Updating map state when moving the map
      map.on('move', () => {
       const { lng, lat } = map.getCenter();
 
@@ -56,6 +55,7 @@ class Map extends Component{
     });
 
   }
+  
   componentDidUpdate() {
     this.updateMapLayers()
   }
@@ -65,13 +65,15 @@ class Map extends Component{
     this.addLayers();    
   }
 
+
+  //Deleting all layers and sources in map
   deleteLayers(){
-    debugger
     for (let i = 0; i < this.state.layersInMap.length; i++) {
       if(this._map.getSource(this.state.layersInMap[i].id)){
         this._map.removeLayer(this.state.layersInMap[i].id)
         this._map.removeSource(this.state.layersInMap[i].id)
       }
+      //Deleting polygon-outlines
       if(this._map.getSource(this.state.layersInMap[i].id+'_outline')){
         this._map.removeLayer(this.state.layersInMap[i].id + '_outline')
         this._map.removeSource(this.state.layersInMap[i].id + '_outline')
@@ -92,9 +94,11 @@ class Map extends Component{
     this.state.layersInMap = this.props.layers;
   }
 
+
+  //Checking type of layer
   addLayerByType(layer){
-    debugger
-    let type = layer.features?layer.features[0].geometry.type : layer.geometry.type //FIX: Some layers received from Turf doesn't have features
+
+    let type = layer.features ? layer.features[0].geometry.type : layer.geometry.type //FIX: Some layers received from Turf doesn't have features
     switch (type) {
       case 'Polygon':
         this.addPolygonLayer(layer);
@@ -114,7 +118,7 @@ class Map extends Component{
     }
   }
 
-
+  //Adding point-layer
   addPointLayer(layer) {
     this._map.addLayer({
       'id': layer.id,
@@ -132,7 +136,7 @@ class Map extends Component{
     });
   }
 
-
+  //Line layer input
   addLineLayer(layer) {
     let map = this._map
     map.addLayer({
@@ -153,6 +157,8 @@ class Map extends Component{
   }
   
 
+
+  //Polygon layer
   addPolygonLayer(layer) {
     let map = this._map
 
@@ -203,7 +209,7 @@ class Map extends Component{
     })
   }
 
-
+  //Adding some layers at start 
   addDefaultLayers(){
     let formated = formatJson(nedreElvehavn,'Nedre elvehavn', true)
     this.props.addLayer(formated) 
@@ -225,6 +231,7 @@ class Map extends Component{
 
 
 
+//Container for connecting Map to state -- Redux
 
 const mapStateToProps = (state) => ({
   layers: state.layers

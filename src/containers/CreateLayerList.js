@@ -8,6 +8,7 @@ const mapStateToProps = (state) => ({
 });
 
 
+//actions to update state - available for LayerList
 const mapDispatchToProps ={
   updateLayerVisibility,
   updateLayerFill,

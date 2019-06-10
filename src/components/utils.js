@@ -1,10 +1,10 @@
-// let layers = 0;
 let lastId = 0;
 let colors = ['#ff1744', '#2979ff', '#00b8d4', '#00bfa5',  '#ff6d00', '#00bfa5', '#ffd600', '#d50000' ]
 
+
 export default function formatJson(json, name, noBorder, opacity) {
     if(!json.name)
-      json.name = "Layer"
+      json.name = "Layer" + lastId
     if(name)
       json.name = name
     if(!json.visible)

@@ -5,6 +5,7 @@ import Sidebar from './sidebar/Sidebar';
 import Tools from './tools/ToolsPopup';
 
 
+//Inline CSS
 const MapWrapperDiv = styled.div`
   display: flex;
   flex-direction: row;
@@ -12,23 +13,12 @@ const MapWrapperDiv = styled.div`
   align-items: stretch;
 `;
 
-class MapWrapper extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      receivedJson: this.props.receivedJson,
-      layers: [],
-    };
-  }
-
-  updateMapLayers(layers){
-    this.setState({ layers: layers });
-  }
-
+class MainWrapper extends Component{
+  
   render() {
     return (
       <div>
-        <Sidebar updateMapLayers={this.updateMapLayers.bind(this)}/>
+        <Sidebar />
         <MapWrapperDiv>
           <MapContainer />
         </MapWrapperDiv> 
@@ -39,4 +29,4 @@ class MapWrapper extends Component{
 }
 
 
-export default MapWrapper;
+export default MainWrapper;

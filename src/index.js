@@ -4,7 +4,6 @@ import './index.css'
 import MainWrapper from './components/MainWrapper'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-// import configureStore from './store';
 
 import registerServiceWorker from './registerServiceWorker'
 import rootReducer from './reducers/rootReducer'

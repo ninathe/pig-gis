@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+//Components from Material ui: 
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -21,8 +21,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import Button from '@material-ui/core/Button';
 
 
-
-
+//styling for material-ui component
 const styles = theme => ({
   root: {
     width: '100%',
@@ -34,44 +33,47 @@ const styles = theme => ({
   },
 });
 
-class NestedList extends React.Component {
+class Layer extends React.Component {
   state = {
     open: false,
     visible: this.props.visible,
     layerName: this.props.name
   }
 
-  handleClick = () => {
+  handleClick = () => {           //Toggle open
     this.setState(state => ({ open: !state.open }));
   }
 
-  changeFillColor = (color) =>{
+  //Edit layer
+  changeFillColor = (color) =>{   
     if(color!=undefined)
       this.props.updateLayerFill(this.props.id, color)
   }
+   
   changeBorderColor = (color) =>{
     if(color!=undefined)
       this.props.updateLayerBorder(this.props.id, color)
-  }
-
-  updateInput=(e)=>{
-    this.setState({layerName: e.target.value})
   }
 
   changeName = () =>{
     this.props.updateLayerName(this.props.id, this.state.layerName)
   }
 
+
+  //When textfield is updating 
+  updateInput=(e)=>{
+    this.setState({layerName: e.target.value})
+  }
+
   deleteLayer = () =>{
     if(window.confirm("Are you sure you want to delete the layer: "+ this.props.name))
       this.props.deleteLayer(this.props.id)
   }
-
+  
   toggleVisibility = (e) =>{
     e.stopPropagation();
     this.setState(state => ({ visible: !state.visible }));
     this.props.updateLayerVisibility(this.props.id, (this.props.visible == "visible"? "none":"visible"))
-    
   }
 
   render() {
@@ -105,7 +107,7 @@ class NestedList extends React.Component {
                 <DoneIcon />
               </IconButton>
 
-            </ListItem>
+            </ListItem> 
             <ListItem button className={classes.nested}>
               <ListItemIcon>
                 <FormatColorFill />
@@ -145,8 +147,4 @@ class NestedList extends React.Component {
 }
 
 
-NestedList.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(NestedList);
+export default withStyles(styles)(Layer);
