@@ -15,21 +15,23 @@ class Difference extends Component{
     super(props);
   }
 
-  submitIntersection = submitInput =>{
+  submitDifference = submitInput =>{
     if (submitInput.layers.length != 2)
       alert("Velg to lag til utregning.")
     else if(submitInput.layers[0] == submitInput.layers[1])
       alert("Vennligst velg 2 forskjellige lag.")
-    
-    //Get geometries
-    let geom1 = submitInput.layers[0] 
-    let geom2 = submitInput.layers[1]
+    else{
+      //Get geometries
+      let geom1 = submitInput.layers[0] 
+      let geom2 = submitInput.layers[1]
 
-    let difference = turf.difference(geom1.features[0], geom2.features[0]);      //Difference geojson
-    if(difference != null){
-      let differenceName = geom1.name+"_"+geom2.name + "_Difference"
-      return (formatJson(difference,differenceName, true, 0.5))    //return formated Json difference-geojson, name, noBorder, fill-opacity
+      let difference = turf.difference(geom1.features[0], geom2.features[0]);      //Difference geojson
+      if(difference != null){
+        let differenceName = geom1.name+"_"+geom2.name + "_Difference"
+        return (formatJson(difference,differenceName, true, 0.5))    //return formated Json difference-geojson, name, noBorder, fill-opacity
+      }
     }
+    
    
   }
 
@@ -40,7 +42,7 @@ class Difference extends Component{
     return(
       <ToolContent 
       selectionFields={[layer1, layer2]}
-      submitForm={this.submitIntersection}
+      submitForm={this.submitDifference}
       close ={this.props.close}
       ></ToolContent>
     ); 

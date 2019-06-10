@@ -73,7 +73,8 @@ class ToolsContent extends Component{
   }
 
   getFilteredLayers(field){           
-    let validLayers = (field.type != undefined) ? getValidLayers(field.type) : this.props.layers
+    let validLayers = (field.type != undefined) ? this.getValidLayers(field.type) : this.props.layers
+    debugger
     return validLayers
   }
 
@@ -108,12 +109,12 @@ class ToolsContent extends Component{
             helperText={field.helperText}
             margin="normal"
           >
-            {this.props.layers.map(layer => (             //All map layers 
+            {/* {this.props.layers.map(layer => (             //All map layers 
               <MenuItem key={layer.id} value={layer.id}>
                 {layer.name}
               </MenuItem>
-            ))}
-            {this.props.layers
+            ))} */}
+            {this.getFilteredLayers(field)
                 //FIND SOLUTION
                 // .filter(layer =>{return layer.features[0].geometry.type == "Polygon"||layer.features[0].geometry.type == "MultiPolygon"}) //only Polygons and multipolygons are accepted
                 .map(layer => (  
