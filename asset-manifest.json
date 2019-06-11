@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Gislyfe/static/css/main.26dd8bd2.chunk.css",
-    "main.js": "/Gislyfe/static/js/main.9f40d4f6.chunk.js",
-    "main.js.map": "/Gislyfe/static/js/main.9f40d4f6.chunk.js.map",
+    "main.css": "/Gislyfe/static/css/main.1c824e95.chunk.css",
+    "main.js": "/Gislyfe/static/js/main.81f6f36f.chunk.js",
+    "main.js.map": "/Gislyfe/static/js/main.81f6f36f.chunk.js.map",
     "runtime~main.js": "/Gislyfe/static/js/runtime~main.174b03e2.js",
     "runtime~main.js.map": "/Gislyfe/static/js/runtime~main.174b03e2.js.map",
-    "static/js/2.55a4ab64.chunk.js": "/Gislyfe/static/js/2.55a4ab64.chunk.js",
-    "static/js/2.55a4ab64.chunk.js.map": "/Gislyfe/static/js/2.55a4ab64.chunk.js.map",
+    "static/js/2.8d2146b1.chunk.js": "/Gislyfe/static/js/2.8d2146b1.chunk.js",
+    "static/js/2.8d2146b1.chunk.js.map": "/Gislyfe/static/js/2.8d2146b1.chunk.js.map",
     "index.html": "/Gislyfe/index.html",
-    "precache-manifest.2b144eaa8c204a362c7c5c1fa09acc03.js": "/Gislyfe/precache-manifest.2b144eaa8c204a362c7c5c1fa09acc03.js",
+    "precache-manifest.ea5499df9e3f120caccefae87e0a690e.js": "/Gislyfe/precache-manifest.ea5499df9e3f120caccefae87e0a690e.js",
     "service-worker.js": "/Gislyfe/service-worker.js",
-    "static/css/main.26dd8bd2.chunk.css.map": "/Gislyfe/static/css/main.26dd8bd2.chunk.css.map"
+    "static/css/main.1c824e95.chunk.css.map": "/Gislyfe/static/css/main.1c824e95.chunk.css.map"
   }
 }

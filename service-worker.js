@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Gislyfe/precache-manifest.2b144eaa8c204a362c7c5c1fa09acc03.js"
+  "/Gislyfe/precache-manifest.ea5499df9e3f120caccefae87e0a690e.js"
 );
 
 self.addEventListener('message', (event) => {
