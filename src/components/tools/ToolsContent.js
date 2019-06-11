@@ -109,14 +109,7 @@ class ToolsContent extends Component{
             helperText={field.helperText}
             margin="normal"
           >
-            {/* {this.props.layers.map(layer => (             //All map layers 
-              <MenuItem key={layer.id} value={layer.id}>
-                {layer.name}
-              </MenuItem>
-            ))} */}
-            {this.getFilteredLayers(field)
-                //FIND SOLUTION
-                // .filter(layer =>{return layer.features[0].geometry.type == "Polygon"||layer.features[0].geometry.type == "MultiPolygon"}) //only Polygons and multipolygons are accepted
+            {this.getFilteredLayers(field)    //Only show layers of right type 
                 .map(layer => (  
             <MenuItem key={layer.id} value={layer.id}>
               {layer.name}
